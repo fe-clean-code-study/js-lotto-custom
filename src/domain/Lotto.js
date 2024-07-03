@@ -1,3 +1,5 @@
+import { isDuplicated } from "../utils/index.js";
+
 class Lotto {
   #lottoNumbers;
 
@@ -8,9 +10,7 @@ class Lotto {
   }
 
   static #validateLottoNumbers(lottoNumbers) {
-    const set = new Set(lottoNumbers);
-
-    if (set.size !== lottoNumbers.length) {
+    if (isDuplicated(lottoNumbers)) {
       throw new Error("중복되는 번호가 있습니다.");
     }
   }
