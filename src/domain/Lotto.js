@@ -9,6 +9,10 @@ class Lotto {
     this.#lottoNumbers = [...lottoNumbers];
   }
 
+  get numbers() {
+    return [...this.#lottoNumbers];
+  }
+
   static #validateLottoNumbers(lottoNumbers) {
     if (!Array.isArray(lottoNumbers)) {
       throw new Error("로또 번호로 적합하지 않은 값입니다.");
@@ -20,6 +24,14 @@ class Lotto {
 
     if (lottoNumbers.some((number) => typeof number !== "number")) {
       throw new Error("로또 번호 중에 적합하지 않은 값이 있습니다.");
+    }
+
+    if (lottoNumbers.some((number) => number < 1)) {
+      throw new Error("로또 번호 중에 1보다 작은 번호가 있습니다.");
+    }
+
+    if (lottoNumbers.some((number) => 45 < number)) {
+      throw new Error("로또 번호 중에 45보다 큰 번호가 있습니다.");
     }
 
     if (isDuplicated(lottoNumbers)) {
