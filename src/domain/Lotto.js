@@ -1,26 +1,18 @@
 class Lotto {
-  static #PRICE_PER_ONE = 1000;
+  #lottoNumbers;
 
-  #count;
+  constructor(lottoNumbers) {
+    Lotto.#validateLottoNumbers(lottoNumbers);
 
-  constructor(price) {
-    if (typeof price !== "number") {
-      throw new Error("로또 구입 금액으로 숫자를 입력해야 합니다.");
-    }
-
-    if (price < Lotto.#PRICE_PER_ONE) {
-      throw new Error("로또 구입 금액은 1000원이상이어야 합니다.");
-    }
-
-    this.#count = Lotto.#countLotto(price);
+    this.#lottoNumbers = [...lottoNumbers];
   }
 
-  get count() {
-    return this.#count;
-  }
+  static #validateLottoNumbers(lottoNumbers) {
+    const set = new Set(lottoNumbers);
 
-  static #countLotto(price) {
-    return Math.floor(price / Lotto.#PRICE_PER_ONE);
+    if (set.size !== lottoNumbers.length) {
+      throw new Error("중복되는 번호가 있습니다.");
+    }
   }
 }
 
