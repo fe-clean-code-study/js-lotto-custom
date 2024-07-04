@@ -1,4 +1,4 @@
-import { getRandomNumber, isDuplicated, deepCopy } from "../utils/index.js";
+import { getRandomNumber, isDuplicated } from "../utils/index.js";
 import Lotto from "./Lotto.js";
 
 class LottoMachine {
@@ -17,17 +17,11 @@ class LottoMachine {
   }
 
   get lottos() {
-    const copiedLottos = deepCopy(this.#lottos);
-
-    return copiedLottos;
+    return [...this.#lottos];
   }
 
   static #createLottos(count) {
-    return Array.from({ length: count }).map(() => {
-      const lotto = LottoMachine.#createLotto();
-
-      return lotto.numbers;
-    });
+    return Array.from({ length: count }).map(() => LottoMachine.#createLotto());
   }
 
   static #createLotto() {

@@ -31,8 +31,8 @@ describe("LottoMachine 클래스 테스트", () => {
   test("무작위 번호 6개가 적힌 로또를 받는다.", () => {
     const lottoMachine = new LottoMachine(1000);
 
-    const lottoNumbers = lottoMachine.lottos[0];
+    const lotto = lottoMachine.lottos[0];
 
-    expect(lottoNumbers).toHaveLength(6);
+    expect(lotto.numbers).toHaveLength(6);
   });
 });
