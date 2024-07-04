@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import WinningLotto from "../domain/WinningLotto.js";
+import { WinningLotto } from "../domain/index.js";
 
 describe("WinningLotto 클래스 테스트", () => {
   test("보너스 번호가 1보다 작으면 오류가 발생한다.", () => {
