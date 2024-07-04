@@ -18,6 +18,14 @@ class Lotto {
     return [...this.#lottoNumbers];
   }
 
+  static isLessThanMinLottoNumber(number) {
+    return number < MIN_LOTTO_NUMBER;
+  }
+
+  static isGreaterThanMaxLottoNumber(number) {
+    return MAX_LOTTO_NUMBER < number;
+  }
+
   static #validateLottoNumbers(lottoNumbers) {
     if (!Array.isArray(lottoNumbers)) {
       throw new Error("로또 번호로 적합하지 않은 값입니다.");
@@ -31,13 +39,13 @@ class Lotto {
       throw new Error("로또 번호 중에 적합하지 않은 값이 있습니다.");
     }
 
-    if (lottoNumbers.some((number) => number < MIN_LOTTO_NUMBER)) {
+    if (lottoNumbers.some(Lotto.isLessThanMinLottoNumber)) {
       throw new Error(
         `로또 번호 중에 ${MIN_LOTTO_NUMBER}보다 작은 번호가 있습니다.`
       );
     }
 
-    if (lottoNumbers.some((number) => MAX_LOTTO_NUMBER < number)) {
+    if (lottoNumbers.some(Lotto.isGreaterThanMaxLottoNumber)) {
       throw new Error(
         `로또 번호 중에 ${MAX_LOTTO_NUMBER}보다 큰 번호가 있습니다.`
       );
