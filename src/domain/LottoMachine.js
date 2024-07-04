@@ -1,4 +1,4 @@
-import { getRandomNumber, isDuplicated } from "../utils/index.js";
+import { getRandomNumber, isDuplicated, deepCopy } from "../utils/index.js";
 import {
   MIN_LOTTO_NUMBER,
   MAX_LOTTO_NUMBER,
@@ -22,11 +22,17 @@ class LottoMachine {
   }
 
   get lottos() {
-    return this.#lottos;
+    const copiedLottos = deepCopy(this.#lottos);
+
+    return copiedLottos;
   }
 
   static #createLottos(count) {
-    return Array.from({ length: count }).map(() => LottoMachine.#createLotto());
+    return Array.from({ length: count }).map(() => {
+      const lotto = LottoMachine.#createLotto();
+
+      return lotto.numbers;
+    });
   }
 
   static #createLotto() {
@@ -37,9 +43,9 @@ class LottoMachine {
     };
 
     while (lottoNumbers.length < LOTTO_NUMBERS_SIZE) {
-      const num = getRandomNumber(MIN_LOTTO_NUMBER, MAX_LOTTO_NUMBER);
+      const randomNumber = getRandomNumber(MIN_LOTTO_NUMBER, MAX_LOTTO_NUMBER);
 
-      addLottoNumber(num);
+      addLottoNumber(randomNumber);
     }
 
     return new Lotto(lottoNumbers);
