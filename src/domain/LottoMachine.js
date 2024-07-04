@@ -1,4 +1,4 @@
-import { isDuplicated } from "../utils/index.js";
+import { getRandomNumber, isDuplicated } from "../utils/index.js";
 import Lotto from "./Lotto.js";
 
 class LottoMachine {
@@ -8,12 +8,8 @@ class LottoMachine {
 
   constructor(price) {
     LottoMachine.#validatePrice(price);
-
     this.#count = LottoMachine.#countLotto(price);
-
-    this.#lottos = Array.from({ length: this.#count }).map(() =>
-      LottoMachine.#createLotto()
-    );
+    this.#lottos = LottoMachine.#createLottos(this.#count);
   }
 
   get count() {
@@ -24,15 +20,21 @@ class LottoMachine {
     return this.#lottos;
   }
 
+  static #createLottos(count) {
+    return Array.from({ length: count }).map(() => LottoMachine.#createLotto());
+  }
+
   static #createLotto() {
     const lottoNumbers = [];
+    const addLottoNumber = (number) => {
+      const nextLottoNumbers = lottoNumbers.concat(number);
+      !isDuplicated(nextLottoNumbers) && lottoNumbers.push(number);
+    };
 
     while (lottoNumbers.length < 6) {
-      const num = Math.floor(Math.random() * 45) + 1;
+      const num = getRandomNumber(1, 45);
 
-      if (!isDuplicated(lottoNumbers.concat(num))) {
-        lottoNumbers.push(num);
-      }
+      addLottoNumber(num);
     }
 
     return new Lotto(lottoNumbers);
