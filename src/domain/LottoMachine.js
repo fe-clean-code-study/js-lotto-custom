@@ -1,4 +1,9 @@
 import { getRandomNumber, isDuplicated } from "../utils/index.js";
+import {
+  MIN_LOTTO_NUMBER,
+  MAX_LOTTO_NUMBER,
+  LOTTO_NUMBERS_SIZE,
+} from "../constants/index.js";
 import Lotto from "./Lotto.js";
 
 class LottoMachine {
@@ -31,8 +36,8 @@ class LottoMachine {
       !isDuplicated(nextLottoNumbers) && lottoNumbers.push(number);
     };
 
-    while (lottoNumbers.length < 6) {
-      const num = getRandomNumber(1, 45);
+    while (lottoNumbers.length < LOTTO_NUMBERS_SIZE) {
+      const num = getRandomNumber(MIN_LOTTO_NUMBER, MAX_LOTTO_NUMBER);
 
       addLottoNumber(num);
     }
@@ -50,7 +55,9 @@ class LottoMachine {
     }
 
     if (price < LottoMachine.#PRICE_PER_ONE) {
-      throw new Error("로또 구입 금액은 1000원이상이어야 합니다.");
+      throw new Error(
+        `로또 구입 금액은 ${LottoMachine.#PRICE_PER_ONE}원이상이어야 합니다.`
+      );
     }
   }
 }
