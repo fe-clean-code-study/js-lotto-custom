@@ -1,9 +1,4 @@
 import { getRandomNumber, isDuplicated, deepCopy } from "../utils/index.js";
-import {
-  MIN_LOTTO_NUMBER,
-  MAX_LOTTO_NUMBER,
-  LOTTO_NUMBERS_SIZE,
-} from "../constants/index.js";
 import Lotto from "./Lotto.js";
 
 class LottoMachine {
@@ -42,8 +37,8 @@ class LottoMachine {
       !isDuplicated(nextLottoNumbers) && lottoNumbers.push(number);
     };
 
-    while (lottoNumbers.length < LOTTO_NUMBERS_SIZE) {
-      const randomNumber = getRandomNumber(MIN_LOTTO_NUMBER, MAX_LOTTO_NUMBER);
+    while (lottoNumbers.length < Lotto.NUMBERS_SIZE) {
+      const randomNumber = getRandomNumber(Lotto.MIN_NUMBER, Lotto.MAX_NUMBER);
 
       addLottoNumber(randomNumber);
     }

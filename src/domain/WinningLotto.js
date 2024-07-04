@@ -17,11 +17,11 @@ class WinningLotto extends Lotto {
 
   static #validateBonusNumber(winningNumbers, bonusNumber) {
     if (Lotto.isLessThanMinLottoNumber(bonusNumber)) {
-      throw new Error("보너스 번호는 1이상이어야 합니다.");
+      throw new Error(`보너스 번호는 ${Lotto.MIN_NUMBER}이상이어야 합니다.`);
     }
 
     if (Lotto.isGreaterThanMaxLottoNumber(bonusNumber)) {
-      throw new Error("보너스 번호는 45이하여야 합니다.");
+      throw new Error(`보너스 번호는 ${Lotto.MAX_NUMBER}이하여야 합니다.`);
     }
 
     if (isDuplicated(winningNumbers.concat(bonusNumber))) {
