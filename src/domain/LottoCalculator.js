@@ -1,5 +1,14 @@
 class LottoCalculator {
+  static #LOTTO_PRIZES = {
+    1: 2_000_000_000,
+    2: 30_000_000,
+    3: 1_500_000,
+    4: 50000,
+    5: 5000,
+  };
+
   #winningCounts;
+  #rateOfReturn;
 
   constructor({ price, lottos, winningLotto }) {
     this.#winningCounts = {
@@ -11,10 +20,15 @@ class LottoCalculator {
     };
 
     this.#updateWinningCounts(lottos, winningLotto);
+    this.#calcRateOfReturn(price);
   }
 
   get winningCounts() {
     return { ...this.#winningCounts };
+  }
+
+  get rateOfReturn() {
+    return this.#rateOfReturn;
   }
 
   #updateWinningCounts(lottos, winningLotto) {
@@ -40,7 +54,13 @@ class LottoCalculator {
     });
   }
 
-  #calcRateOfReturn() {}
+  #calcRateOfReturn(price) {
+    const sumOfPrize = Object.entries(this.#winningCounts)
+      .map(([ranking, count]) => LottoCalculator.#LOTTO_PRIZES[ranking] * count)
+      .reduce((acc, cur) => acc + cur, 0);
+
+    this.#rateOfReturn = (sumOfPrize / price) * 100;
+  }
 }
 
 export default LottoCalculator;
