@@ -19,8 +19,15 @@ class LottoCalculator {
       5: 0,
     };
 
-    this.#updateWinningCounts(lottos, winningLotto);
-    this.#calcRateOfReturn(price);
+    this.#winningCounts = LottoCalculator.#updateWinningCounts({
+      winningCounts: this.#winningCounts,
+      lottos,
+      winningLotto,
+    });
+    this.#rateOfReturn = LottoCalculator.#calcRateOfReturn(
+      this.#winningCounts,
+      price
+    );
   }
 
   get winningCounts() {
@@ -31,35 +38,53 @@ class LottoCalculator {
     return this.#rateOfReturn;
   }
 
-  #updateWinningCounts(lottos, winningLotto) {
-    const result = lottos.map((lotto) => ({
-      matchedCount: lotto.numbers.filter((number) =>
-        winningLotto.numbers.includes(number)
-      ).length,
-      isMatchedBonus: lotto.numbers.includes(winningLotto.bonusNumber),
+  static #updateWinningCounts({ winningCounts, lottos, winningLotto }) {
+    const copiedWinningCounts = { ...winningCounts };
+    const lottoMatchResults = lottos.map((lotto) => ({
+      matchedCount: LottoCalculator.#matchLottoNumbers(
+        lotto.numbers,
+        winningLotto.numbers
+      ),
+      isMatchedBonusNumber: lotto.numbers.includes(winningLotto.bonusNumber),
     }));
 
-    result.forEach(({ matchedCount, isMatchedBonus }) => {
-      if (matchedCount === 6) {
-        this.#winningCounts[1] += 1;
-      } else if (matchedCount === 5 && isMatchedBonus) {
-        this.#winningCounts[2] += 1;
-      } else if (matchedCount === 5) {
-        this.#winningCounts[3] += 1;
-      } else if (matchedCount === 4) {
-        this.#winningCounts[4] += 1;
-      } else if (matchedCount === 3) {
-        this.#winningCounts[5] += 1;
-      }
-    });
+    return LottoCalculator.#countLottoWins(
+      lottoMatchResults,
+      copiedWinningCounts
+    );
   }
 
-  #calcRateOfReturn(price) {
-    const sumOfPrize = Object.entries(this.#winningCounts)
+  static #matchLottoNumbers(lottoNumber, winningLottoNumber) {
+    return lottoNumber.filter((number) => winningLottoNumber.includes(number))
+      .length;
+  }
+
+  static #countLottoWins(lottoMatchResults, winningCounts) {
+    return lottoMatchResults.reduce(
+      (counts, { matchedCount, isMatchedBonusNumber }) => {
+        const prizeMap = {
+          6: 1,
+          5: isMatchedBonusNumber ? 2 : 3,
+          4: 4,
+          3: 5,
+        };
+
+        if (prizeMap[matchedCount]) {
+          counts[prizeMap[matchedCount]] += 1;
+        }
+
+        return counts;
+      },
+      winningCounts
+    );
+  }
+
+  static #calcRateOfReturn(winningCounts, price) {
+    const sumOfPrize = Object.entries({ ...winningCounts })
       .map(([ranking, count]) => LottoCalculator.#LOTTO_PRIZES[ranking] * count)
       .reduce((acc, cur) => acc + cur, 0);
 
-    this.#rateOfReturn = (sumOfPrize / price) * 100;
+    return (sumOfPrize / price) * 100;
   }
 }
 
