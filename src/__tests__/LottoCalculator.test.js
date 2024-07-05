@@ -94,12 +94,28 @@ describe("LottoCalculator 클래스 테스트", () => {
 
     expect(winningCounts).toHaveProperty("5", 1);
   });
+
+  test("수익률을 가져온다.", () => {
+    const { price, lottos } = createLottoMachineMock(
+      [1, 2, 3, 8, 9, 10],
+      10000
+    );
+    const winningLotto = new WinningLotto([1, 2, 3, 4, 5, 6], 7);
+
+    const { rateOfReturn } = new LottoCalculator({
+      price,
+      lottos,
+      winningLotto,
+    });
+
+    expect(rateOfReturn).toBe(50);
+  });
 });
 
-function createLottoMachineMock(lottoNumbers) {
+function createLottoMachineMock(lottoNumbers, price = 1000) {
   const lotto = new Lotto(lottoNumbers);
   const lottoMachineMock = vi.fn();
-  lottoMachineMock.mockReturnValueOnce({ price: 1000, lottos: [lotto] });
+  lottoMachineMock.mockReturnValueOnce({ price, lottos: [lotto] });
 
   return lottoMachineMock();
 }
