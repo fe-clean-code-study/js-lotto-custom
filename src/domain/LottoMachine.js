@@ -51,8 +51,8 @@ class LottoMachine {
   }
 
   static #validatePrice(price) {
-    if (typeof price !== "number") {
-      throw new Error("로또 구입 금액으로 숫자를 입력해야 합니다.");
+    if (typeof price !== "number" || !Number.isInteger(price)) {
+      throw new Error("로또 구입 금액으로 정수를 입력해야 합니다.");
     }
 
     if (price < LottoMachine.#PRICE_PER_ONE) {

@@ -2,9 +2,9 @@ import { describe, test, expect } from "vitest";
 import { LottoMachine } from "../domain/index.js";
 
 describe("LottoMachine 클래스 테스트", () => {
-  test("로또를 구입할 때 숫자가 아닌 값을 받으면 오류가 발생한다.", () => {
+  test("로또를 구입할 때 정수가 아닌 값을 받으면 오류가 발생한다.", () => {
     expect(() => new LottoMachine("1")).toThrowError(
-      "로또 구입 금액으로 숫자를 입력해야 합니다."
+      "로또 구입 금액으로 정수를 입력해야 합니다."
     );
   });
 
