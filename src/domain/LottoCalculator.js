@@ -1,7 +1,7 @@
 class LottoCalculator {
   #winningCounts;
 
-  constructor(lottos, winningLotto) {
+  constructor({ price, lottos, winningLotto }) {
     this.#winningCounts = {
       1: 0,
       2: 0,
@@ -39,6 +39,8 @@ class LottoCalculator {
       }
     });
   }
+
+  #calcRateOfReturn() {}
 }
 
 export default LottoCalculator;

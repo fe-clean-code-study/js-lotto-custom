@@ -3,13 +3,19 @@ import Lotto from "./Lotto.js";
 
 class LottoMachine {
   static #PRICE_PER_ONE = 1000;
+  #price;
   #count;
   #lottos;
 
   constructor(price) {
     LottoMachine.#validatePrice(price);
+    this.#price = price;
     this.#count = LottoMachine.#countLotto(price);
     this.#lottos = LottoMachine.#createLottos(this.#count);
+  }
+
+  get price() {
+    return this.#price;
   }
 
   get count() {
