@@ -34,7 +34,7 @@ class Lotto {
       throw new Error(`로또 번호는 ${Lotto.NUMBERS_SIZE}개여야 합니다.`);
     }
 
-    if (lottoNumbers.some((number) => typeof number !== "number")) {
+    if (lottoNumbers.some((number) => !Number.isInteger(number))) {
       throw new Error("로또 번호 중에 적합하지 않은 값이 있습니다.");
     }
 
