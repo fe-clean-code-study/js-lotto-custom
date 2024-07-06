@@ -8,4 +8,4 @@ const createLottoNumbers = () => {
   return [...lottoNumbers]
 }
 
-export default createLottoNumbers()
+export default createLottoNumbers
