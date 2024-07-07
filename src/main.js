@@ -1,11 +1,14 @@
-import Lotto from "./domain/Lotto.js";
+import LottoSystemController from "./domain/LottoSystemController.js";
+import LottoSystem from "./domain/LottoSystem.js";
+import LOTTO_RANKING_DATA from "./constants/lottoRankingData.js";
+import LottoSystemViewer from "./domain/LottoSystemViewer.js";
 async function main() {
-  new Lotto({
-    type: LOTTO_TYPE.TICKET,
-    numbers: [1,2,3,4,5,6]
-  })
+  await new LottoSystemController({
+    lottoSystem: new LottoSystem({
+      rankingData: LOTTO_RANKING_DATA
+    }),
+    viewer: new LottoSystemViewer()
+  }).run()
 }
 
 main();
-
-// 로또Q:q

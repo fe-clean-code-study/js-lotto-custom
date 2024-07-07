@@ -8,12 +8,12 @@ describe('로또 번호 일치여부 계산 테스트', () => {
   test('유효한 당첨 로또로만 계산할 수 있다.', () => {
     const validLottoTicket = createLottoTicket([11,12,13,14,15,16])
 
-    expect(() => new LottoMatcher({
+    expect(() => LottoMatcher.matchLotto({
       winningLotto: { type: LOTTO_TYPE.WINNING, numbers: [1,2,3,4,5,6], bonusNumber: 8 },
       lottoTickets: [ validLottoTicket ]
     })).toThrow(lottoMatcherValidations.validWinningLotto.errorMessage)
 
-    expect(() => new LottoMatcher({
+    expect(() => LottoMatcher.matchLotto({
       winningLotto: validLottoTicket,
       lottoTickets: [ validLottoTicket ]
     })).toThrow(lottoMatcherValidations.validWinningLotto.errorMessage)
@@ -24,12 +24,12 @@ describe('로또 번호 일치여부 계산 테스트', () => {
       [1,2,3,4,5,6], 7
     )
 
-    expect(() => new LottoMatcher({
+    expect(() => LottoMatcher.matchLotto({
       winningLotto: validWinningLotto,
       lottoTickets: [ { type: LOTTO_TYPE.TICKET, numbers: [1,2,3,4,5,6] } ]
     }))
 
-    expect(() => new LottoMatcher({
+    expect(() => LottoMatcher.matchLotto({
       winningLotto: validWinningLotto,
       lottoTickets: [ validWinningLotto ]
     })).toThrow(lottoMatcherValidations.validLottoTickets.errorMessage)

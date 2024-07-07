@@ -1,15 +1,9 @@
 import {validateLottoMatcher} from "../validations/lottoMatcher.js";
 
 export default class LottoMatcher{
-  constructor({ winningLotto, lottoTickets }) {
-    LottoMatcher.#validate({ winningLotto, lottoTickets })
-
-    this.winningLotto = winningLotto
-    this.lottoTickets = lottoTickets
-  }
-
   static matchLotto({ winningLotto, lottoTickets }) {
     LottoMatcher.#validate({ winningLotto, lottoTickets })
+
     return lottoTickets.map(lottoTicket => ({
       lotto: lottoTicket,
       matchCount: LottoMatcher.#getMatchCount(lottoTicket.numbers, winningLotto),

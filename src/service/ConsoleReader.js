@@ -26,12 +26,12 @@ export default class ConsoleReader {
       if (errorMessage) {
         return processInput()
       }
-      this.readLine.close()
       return input
     }
-
     return processInput()
   }
-}
 
-const consoleReader = new ConsoleReader()
+  close() {
+    this.readLine.close()
+  }
+}

@@ -4,11 +4,13 @@ import ConsoleReader from "../service/ConsoleReader.js";
 export default class LottoSystemViewer{
   constructor() {
     this.printer = new ConsolePrinter({
+      paidCount: '%{1}개를 구매했습니다.',
       lottoTicket: '%{1} | %{2} | %{3} | %{4} | %{5} | %{6}',
-      startShowResult: '\n당첨 통계\n---------------------------------------------',
+      line: '---------------------------------------------',
       ranking: '%{1}등 : %{2}개 일치 (%{3}원) - %{4}개',
       rankingWithBonus: '%{1}등 : %{2}개 일치, 보너스볼 일치 (%{3}원) - %{4}개',
-      profitRatio: '총 수익률은 %{1}% 입니다.'
+      profitRatio: '총 수익률은 %{1}% 입니다.',
+      error: '⚠️ %{1}'
     })
     this.reader = new ConsoleReader()
   }
@@ -28,15 +30,24 @@ export default class LottoSystemViewer{
     return Number(answer)
   }
 
+  displayPaidCount({ ticketCount }) {
+    this.printer.lineBreak()
+    this.printer.printWithTemplate('paidCount', [ticketCount])
+  }
+
   displayLottoTickets({ lottoData }) {
     lottoData.lottoTickets.forEach(({ numbers }) => {
       const numbersForPrint = numbers.map(number => `${number}`.padStart(2, '0'))
       this.printer.printWithTemplate('lottoTicket', numbersForPrint)
     })
+    this.printer.lineBreak()
   }
 
-  displayLottoResult({ lottoRankingResult, profitRatio }) {
-    this.printer.printWithTemplate('startShowResult')
+  displayLottoResult({ lottoRankingResult }) {
+    this.printer.lineBreak()
+    this.printer.print('당첨 통계')
+    this.printer.printWithTemplate('line')
+
     lottoRankingResult.forEach(({ rank, matchCount, bonusMatch, profit, ticketList }) => {
       const resultForPrint = [rank, matchCount, profit, ticketList.length]
       if (bonusMatch) {
@@ -46,6 +57,21 @@ export default class LottoSystemViewer{
         this.printer.printWithTemplate('ranking', resultForPrint)
       }
     })
+  }
+
+  displayProfitRatio({ profitRatio }) {
+    this.printer.printWithTemplate('line')
     this.printer.printWithTemplate('profitRatio', [profitRatio])
+    this.printer.lineBreak()
+  }
+
+  displayError(error) {
+    this.printer.lineBreak()
+    this.printer.printWithTemplate('error',[ error.message])
+    this.printer.lineBreak()
+  }
+
+  finish() {
+    this.reader.close()
   }
 }
