@@ -5,11 +5,14 @@ import LOTTO_RANKING_DATA from '../constants/lottoRankingData.js';
 import { validateLottoSystem } from '../validations/lottoSystem.js';
 
 export default class LottoSystem {
+  #rankingData
+  #lottoData
+  
   constructor({ rankingData = LOTTO_RANKING_DATA } = {}) {
     LottoSystem.#validate({ rankingData });
 
-    this.rankingData = rankingData;
-    this.lottoData = {
+    this.#rankingData = rankingData;
+    this.#lottoData = {
       winningLotto: null,
       lottoTickets: [],
       paidAmount: 0
@@ -37,16 +40,24 @@ export default class LottoSystem {
   }
 
   #setLottoData(newData) {
-    this.lottoData = { ...this.lottoData, ...newData };
+    this.#lottoData = { ...this.#lottoData, ...newData };
+  }
+
+  get paidAmount() {
+    return this.#lottoData.paidAmount;
+  }
+
+  get lottoTickets() {
+    return this.#lottoData.lottoTickets
   }
 
   get ticketCount() {
-    return this.lottoData.lottoTickets.length;
+    return this.#lottoData.lottoTickets.length;
   }
 
   get lottoRankingResult() {
-    const lottoMatchResult = LottoMatcher.matchLotto(this.lottoData);
-    return this.rankingData.map((data) => ({
+    const lottoMatchResult = LottoMatcher.matchLotto(this.#lottoData);
+    return this.#rankingData.map((data) => ({
       ...data,
       ticketList: lottoMatchResult
         .filter(({ matchCount, bonusMatch }) => matchCount === data.matchCount && bonusMatch === data.bonusMatch)
@@ -59,6 +70,6 @@ export default class LottoSystem {
   }
 
   get profitRatio() {
-    return parseFloat(((this.profitAmount / this.lottoData.paidAmount) * 100).toFixed(2));
+    return parseFloat(((this.profitAmount / this.#lottoData.paidAmount) * 100).toFixed(2));
   }
 }

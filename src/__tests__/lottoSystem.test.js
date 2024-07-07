@@ -8,6 +8,7 @@ describe('로또 시스템 테스트', async () => {
   const originalCreateLottoNumbers = await vi
     .importActual('../domain/createLottoNumbers')
     .then((module) => module.default);
+
   beforeEach(() => {
     createLottoNumbers.mockReset();
     createLottoNumbers.mockImplementation(originalCreateLottoNumbers);
@@ -96,7 +97,7 @@ describe('로또 시스템 테스트', async () => {
     lottoSystem.payLottoTicket(10000);
 
     expect(lottoSystem.ticketCount).toBe(10);
-    expect(lottoSystem.payAmount).toBe(10000);
+    expect(lottoSystem.paidAmount).toBe(10000);
   });
 
   test('로또 시스템은 발행한 로또들을 등수 별로 분류할 수 있다.', () => {
