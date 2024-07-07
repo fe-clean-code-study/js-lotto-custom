@@ -35,9 +35,8 @@ class LottoMachine {
   }
 
   static #createLotto() {
-    const sortedlottoNumbers = LottoMachine.#getLottoNumbers().toSorted(
-      (a, b) => a - b
-    );
+    const lottoNumbers = LottoMachine.#getLottoNumbers();
+    const sortedlottoNumbers = [...lottoNumbers].sort((a, b) => a - b);
 
     return new Lotto(sortedlottoNumbers);
   }
