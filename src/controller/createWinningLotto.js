@@ -2,7 +2,7 @@ import { inputManager } from "../service/index.js";
 import { WinningLotto } from "../model/index.js";
 
 const createWinningLotto = async () => {
-  const createWinningLotto = await inputManager.retryScan(
+  const attachBonusNumber = await inputManager.retryScan(
     "> 당첨 번호를 입력해 주세요. ",
     (inputValue) => {
       const numbers = inputValue
@@ -18,7 +18,7 @@ const createWinningLotto = async () => {
     (inputValue) => {
       const bonusNumber = Number(inputValue);
 
-      return createWinningLotto(bonusNumber);
+      return attachBonusNumber(bonusNumber);
     }
   );
 
