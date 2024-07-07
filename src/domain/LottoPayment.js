@@ -1,6 +1,6 @@
 import { validateLottoPayment } from "../validations/lottoPayment.js";
 import createLottoNumbers from "./createLottoNumbers.js";
-import Lotto from "./Lotto.js";
+import {createLottoTicket} from "./Lotto.js";
 
 export default class LottoPayment {
   #payAmount;
@@ -22,9 +22,6 @@ export default class LottoPayment {
   }
 
   createLottoTickets() {
-    return Array.from({ length: this.ticketCount }, () => new Lotto({
-      type: 'ticket',
-      numbers: createLottoNumbers()
-    }))
+    return Array.from({ length: this.ticketCount }, () => createLottoTicket(createLottoNumbers()))
   }
 }

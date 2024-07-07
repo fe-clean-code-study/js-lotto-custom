@@ -1,4 +1,5 @@
 import { validateLotto } from "../validations/lotto.js";
+import LOTTO_TYPE from "../constants/lottoType.js";
 
 export default class Lotto{
   constructor({ type, numbers, bonusNumber = null }) {
@@ -16,3 +17,12 @@ export default class Lotto{
   }
 }
 
+export const createWinningLotto = (numbers, bonusNumber) => new Lotto({
+  type: LOTTO_TYPE.WINNING,
+  numbers, bonusNumber
+})
+
+export const createLottoTicket = (numbers) => new Lotto({
+  type: LOTTO_TYPE.TICKET,
+  numbers
+})

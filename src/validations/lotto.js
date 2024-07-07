@@ -1,8 +1,9 @@
 import createValidator from "./createValidator.js";
+import LOTTO_TYPE from "../constants/lottoType.js";
 
 export const lottoValidations = {
   lottoType: {
-    check: ({ type }) => type === 'winning' || type === 'ticket',
+    check: ({ type }) => type === LOTTO_TYPE.WINNING || type === LOTTO_TYPE.TICKET,
     errorMessage: '로또는 ticket, winning 두 가지 유형이어야 합니다.'
   },
   lottoNumbersLength: {
@@ -10,11 +11,11 @@ export const lottoValidations = {
     errorMessage: '로또 번호는 6개여야 합니다.'
   },
   winningLottoHasBonus: {
-    check: ({ type, bonusNumber }) => type === 'winning' ? Boolean(bonusNumber) : true,
+    check: ({ type, bonusNumber }) => type === LOTTO_TYPE.WINNING ? Boolean(bonusNumber) : true,
     errorMessage: '당첨 로또 번호는 보너스 번호를 가져야 합니다.'
   },
   ticketLottoBonusNull: {
-    check: ({ type, bonusNumber }) => type === 'ticket' ? bonusNumber === null : true,
+    check: ({ type, bonusNumber }) => type === LOTTO_TYPE.TICKET ? bonusNumber === null : true,
     errorMessage: '구매한 로또 번호는 보너스 번호가 없어야 합니다.'
   },
   lottoEachUnique: {
