@@ -86,9 +86,9 @@ describe('로또 시스템 테스트', async() => {
     lottoSystem.setWinningLotto([1,2,3,4,5,6], 7)
     lottoSystem.payLottoTicket(6000)
 
-    expect(lottoSystem.getTicketCountByRank(1)).toBe(1)
-    expect(lottoSystem.getTicketCountByRank(2)).toBe(2)
-    expect(lottoSystem.getTicketCountByRank(4)).toBe(3)
+    expect(lottoSystem.lottoRankingResult.find(({ rank }) => rank === 1).ticketList.length).toBe(1)
+    expect(lottoSystem.lottoRankingResult.find(({ rank }) => rank === 2).ticketList.length).toBe(2)
+    expect(lottoSystem.lottoRankingResult.find(({ rank }) => rank === 4).ticketList.length).toBe(3)
   })
 
   test('로또 시스템은 총 수익을 계산할 수 있다.', () => {

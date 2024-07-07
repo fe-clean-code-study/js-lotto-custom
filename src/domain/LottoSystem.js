@@ -27,7 +27,7 @@ export default class LottoSystem {
   }
 
   payLottoTicket(payAmount) {
-    this.lottoData.lottoTickets = new LottoPayment({ payAmount }).createLottoTickets();
+    this.lottoData.lottoTickets = LottoPayment.createLottoTickets({ payAmount });
     this.payAmount = payAmount
   }
 
@@ -36,22 +36,17 @@ export default class LottoSystem {
   }
 
   get lottoRankingResult() {
-    const { lottoMatchResult } = new LottoMatcher(this.lottoData);
-
+    const lottoMatchResult = LottoMatcher.matchLotto(this.lottoData);
     return this.rankingData.map((data) => ({
       ...data,
-      rankedList: lottoMatchResult
+      ticketList : lottoMatchResult
         .filter(({ matchCount, bonusMatch }) => matchCount === data.matchCount && bonusMatch === data.bonusMatch)
         .map(({ lotto }) => lotto)
-    }));
-  }
-
-  getTicketCountByRank(rank) {
-    return this.lottoRankingResult.find(result => result.rank === rank).rankedList.length
+    }))
   }
 
   get profitAmount() {
-    return this.lottoRankingResult.reduce((sum, { rankedList, profit }) => sum + profit * rankedList.length, 0);
+    return this.lottoRankingResult.reduce((sum, { ticketList, profit }) => sum + profit * ticketList.length, 0);
   }
 
   get profitRatio() {

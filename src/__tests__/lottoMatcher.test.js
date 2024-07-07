@@ -41,11 +41,10 @@ describe('로또 번호 일치여부 계산 테스트', () => {
     const lottoTicket2 = createLottoTicket([11,12,13,14,15,16]) // 0, false
     const lottoTicket3 = createLottoTicket([1,2,3,4,7,8]) // 4, true
 
-    const lottoMatcher = new LottoMatcher({
+    expect(LottoMatcher.matchLotto({
       winningLotto,
       lottoTickets: [lottoTicket1, lottoTicket2, lottoTicket3]
-    })
-    expect(lottoMatcher.lottoMatchResult).toEqual([
+    })).toEqual([
       {
         lotto: lottoTicket1,
         matchCount: 3,

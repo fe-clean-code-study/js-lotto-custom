@@ -1,6 +1,6 @@
 import createReadline from "../utils/createReadline.js";
 
-class ConsoleReader {
+export default class ConsoleReader {
   constructor() {
     this.readLine = createReadline()
   }
@@ -35,5 +35,3 @@ class ConsoleReader {
 }
 
 const consoleReader = new ConsoleReader()
-
-export default consoleReader

@@ -8,11 +8,12 @@ export default class LottoMatcher{
     this.lottoTickets = lottoTickets
   }
 
-  get lottoMatchResult() {
-    return this.lottoTickets.map(lottoTicket => ({
+  static matchLotto({ winningLotto, lottoTickets }) {
+    LottoMatcher.#validate({ winningLotto, lottoTickets })
+    return lottoTickets.map(lottoTicket => ({
       lotto: lottoTicket,
-      matchCount: this.#getMatchCount(lottoTicket.numbers),
-      bonusMatch: this.#getBonusMatch(lottoTicket.numbers)
+      matchCount: LottoMatcher.#getMatchCount(lottoTicket.numbers, winningLotto),
+      bonusMatch: LottoMatcher.#getBonusMatch(lottoTicket.numbers, winningLotto)
     }))
   }
 
@@ -22,11 +23,11 @@ export default class LottoMatcher{
     })
   }
 
-  #getMatchCount(ticketNumbers) {
-    return ticketNumbers.filter(ticketNumber => this.winningLotto.numbers.includes(ticketNumber)).length
+  static #getMatchCount(ticketNumbers, winningLotto) {
+    return ticketNumbers.filter(ticketNumber => winningLotto.numbers.includes(ticketNumber)).length
   }
 
-  #getBonusMatch(ticketNumbers) {
-    return ticketNumbers.includes(this.winningLotto.bonusNumber)
+  static #getBonusMatch(ticketNumbers, winningLotto) {
+    return ticketNumbers.includes(winningLotto.bonusNumber)
   }
 }
