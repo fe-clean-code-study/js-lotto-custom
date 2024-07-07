@@ -1,4 +1,8 @@
-import { isDuplicated } from "../utils/index.js";
+import {
+  isDuplicated,
+  throwErrorWithCondition,
+  validate,
+} from "../utils/index.js";
 
 class Lotto {
   static MIN_NUMBER = 1;
@@ -26,33 +30,32 @@ class Lotto {
   }
 
   static #validateLottoNumbers(lottoNumbers) {
-    if (!Array.isArray(lottoNumbers)) {
-      throw new Error("로또 번호로 적합하지 않은 값입니다.");
-    }
+    validate.array(lottoNumbers, "로또 번호로 적합하지 않은 값입니다.");
 
-    if (lottoNumbers.length !== Lotto.NUMBERS_SIZE) {
-      throw new Error(`로또 번호는 ${Lotto.NUMBERS_SIZE}개여야 합니다.`);
-    }
+    throwErrorWithCondition(
+      lottoNumbers.length !== Lotto.NUMBERS_SIZE,
+      `로또 번호는 ${Lotto.NUMBERS_SIZE}개여야 합니다.`
+    );
 
-    if (lottoNumbers.some((number) => !Number.isInteger(number))) {
-      throw new Error("로또 번호 중에 적합하지 않은 값이 있습니다.");
-    }
+    throwErrorWithCondition(
+      lottoNumbers.some((number) => !Number.isInteger(number)),
+      "로또 번호 중에 적합하지 않은 값이 있습니다."
+    );
 
-    if (lottoNumbers.some(Lotto.isLessThanMinLottoNumber)) {
-      throw new Error(
-        `로또 번호 중에 ${Lotto.MIN_NUMBER}보다 작은 번호가 있습니다.`
-      );
-    }
+    throwErrorWithCondition(
+      lottoNumbers.some(Lotto.isLessThanMinLottoNumber),
+      `로또 번호 중에 ${Lotto.MIN_NUMBER}보다 작은 번호가 있습니다.`
+    );
 
-    if (lottoNumbers.some(Lotto.isGreaterThanMaxLottoNumber)) {
-      throw new Error(
-        `로또 번호 중에 ${Lotto.MAX_NUMBER}보다 큰 번호가 있습니다.`
-      );
-    }
+    throwErrorWithCondition(
+      lottoNumbers.some(Lotto.isGreaterThanMaxLottoNumber),
+      `로또 번호 중에 ${Lotto.MAX_NUMBER}보다 큰 번호가 있습니다.`
+    );
 
-    if (isDuplicated(lottoNumbers)) {
-      throw new Error("중복되는 로또 번호가 있습니다.");
-    }
+    throwErrorWithCondition(
+      isDuplicated(lottoNumbers),
+      "중복되는 로또 번호가 있습니다."
+    );
   }
 }
 

@@ -1,4 +1,9 @@
-import { getRandomNumber, isDuplicated } from "../utils/index.js";
+import {
+  getRandomNumber,
+  isDuplicated,
+  throwErrorWithCondition,
+  validate,
+} from "../utils/index.js";
 import Lotto from "./Lotto.js";
 
 class LottoMachine {
@@ -50,15 +55,12 @@ class LottoMachine {
   }
 
   static #validatePrice(price) {
-    if (!Number.isInteger(price)) {
-      throw new Error("로또 구입 금액으로 정수를 입력해야 합니다.");
-    }
+    validate.integer(price, "로또 구입 금액으로 정수를 입력해야 합니다.");
 
-    if (price < LottoMachine.#PRICE_PER_ONE) {
-      throw new Error(
-        `로또 구입 금액은 ${LottoMachine.#PRICE_PER_ONE}원이상이어야 합니다.`
-      );
-    }
+    throwErrorWithCondition(
+      price < LottoMachine.#PRICE_PER_ONE,
+      `로또 구입 금액은 ${LottoMachine.#PRICE_PER_ONE}원이상이어야 합니다.`
+    );
   }
 }
 

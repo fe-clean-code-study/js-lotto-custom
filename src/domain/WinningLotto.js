@@ -1,4 +1,4 @@
-import { isDuplicated } from "../utils/index.js";
+import { isDuplicated, throwErrorWithCondition } from "../utils/index.js";
 import Lotto from "./Lotto.js";
 
 class WinningLotto extends Lotto {
@@ -16,17 +16,20 @@ class WinningLotto extends Lotto {
   }
 
   static #validateBonusNumber(winningNumbers, bonusNumber) {
-    if (Lotto.isLessThanMinLottoNumber(bonusNumber)) {
-      throw new Error(`보너스 번호는 ${Lotto.MIN_NUMBER}이상이어야 합니다.`);
-    }
+    throwErrorWithCondition(
+      Lotto.isLessThanMinLottoNumber(bonusNumber),
+      `보너스 번호는 ${Lotto.MIN_NUMBER}이상이어야 합니다.`
+    );
 
-    if (Lotto.isGreaterThanMaxLottoNumber(bonusNumber)) {
-      throw new Error(`보너스 번호는 ${Lotto.MAX_NUMBER}이하여야 합니다.`);
-    }
+    throwErrorWithCondition(
+      Lotto.isGreaterThanMaxLottoNumber(bonusNumber),
+      `보너스 번호는 ${Lotto.MAX_NUMBER}이하여야 합니다.`
+    );
 
-    if (isDuplicated(winningNumbers.concat(bonusNumber))) {
-      throw new Error("당첨 번호 중에 보너스 번호와 중복되는 번호가 있습니다.");
-    }
+    throwErrorWithCondition(
+      isDuplicated(winningNumbers.concat(bonusNumber)),
+      "당첨 번호 중에 보너스 번호와 중복되는 번호가 있습니다."
+    );
   }
 }
 
