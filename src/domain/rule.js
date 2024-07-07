@@ -1,3 +1,8 @@
+/**
+ * @todo
+ * clean-code-rule-toolkit으로 반영될 예정입니다.
+ */
+
 function random(minimum, maximum) {
   if (minimum >= maximum) {
     throw new Error("maximum은 minimum보다 커야 합니다.");
