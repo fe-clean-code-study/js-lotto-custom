@@ -1,4 +1,8 @@
-import { isDuplicated, throwErrorWithCondition } from "../utils/index.js";
+import {
+  isDuplicated,
+  throwErrorWithCondition,
+  validate,
+} from "../utils/index.js";
 import Lotto from "./Lotto.js";
 
 class WinningLotto extends Lotto {
@@ -15,7 +19,13 @@ class WinningLotto extends Lotto {
     return this.#bonusNumber;
   }
 
+  static createWithBonusLater(lottoNumbers) {
+    return (bonusNumber) => new WinningLotto(lottoNumbers, bonusNumber);
+  }
+
   static #validateBonusNumber(winningNumbers, bonusNumber) {
+    validate.integer(bonusNumber, "보너스 번호는 정수여야 합니다.");
+
     throwErrorWithCondition(
       Lotto.isLessThanMinLottoNumber(bonusNumber),
       `보너스 번호는 ${Lotto.MIN_NUMBER}이상이어야 합니다.`
