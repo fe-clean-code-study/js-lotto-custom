@@ -2,11 +2,20 @@ import { describe, expect, test } from "vitest";
 import { WinningLotto } from "../model/index.js";
 
 describe("WinningLotto 클래스 테스트", () => {
+  test("보너스 번호가 정수가 아니면 오류가 발생한다.", () => {
+    const lottoNumbers = [1, 2, 3, 4, 5, 6];
+    const bonusNumber = "a";
+
+    expect(() => new WinningLotto(lottoNumbers, bonusNumber)).toThrowError(
+      "보너스 번호는 정수여야 합니다."
+    );
+  });
+
   test("보너스 번호가 1보다 작으면 오류가 발생한다.", () => {
     const lottoNumbers = [1, 2, 3, 4, 5, 6];
     const bonusNumber = 0;
 
-    expect(() => new WinningLotto(lottoNumbers, bonusNumber)).toThrow(
+    expect(() => new WinningLotto(lottoNumbers, bonusNumber)).toThrowError(
       "보너스 번호는 1이상이어야 합니다."
     );
   });
@@ -15,7 +24,7 @@ describe("WinningLotto 클래스 테스트", () => {
     const lottoNumbers = [1, 2, 3, 4, 5, 6];
     const bonusNumber = 46;
 
-    expect(() => new WinningLotto(lottoNumbers, bonusNumber)).toThrow(
+    expect(() => new WinningLotto(lottoNumbers, bonusNumber)).toThrowError(
       "보너스 번호는 45이하여야 합니다."
     );
   });
@@ -24,7 +33,7 @@ describe("WinningLotto 클래스 테스트", () => {
     const lottoNumbers = [1, 2, 3, 4, 5, 6];
     const bonusNumber = 6;
 
-    expect(() => new WinningLotto(lottoNumbers, bonusNumber)).toThrow(
+    expect(() => new WinningLotto(lottoNumbers, bonusNumber)).toThrowError(
       "당첨 번호 중에 보너스 번호와 중복되는 번호가 있습니다."
     );
   });
