@@ -13,11 +13,13 @@ class InputManager {
     return inputValue.trim();
   }
 
-  async retryScan(query, processFn) {
+  async retryScan(query, processFn = null) {
     try {
       const inputValue = await this.scan(query);
 
-      return processFn ? processFn(inputValue) : inputValue;
+      return typeof processFn === "function"
+        ? processFn(inputValue)
+        : inputValue;
     } catch (error) {
       return await this.retryScan(
         `${error.message} 다시 입력해주세요.\n`,

@@ -9,9 +9,10 @@ class OutputManager {
     this.#outputFn(`${value}`);
   }
 
-  printAll(values, fn) {
+  printAll(values, processFn) {
     values.forEach((value) => {
-      const resultToPrint = fn(value);
+      const resultToPrint =
+        typeof processFn === "function" ? processFn(value) : value;
 
       this.#outputFn(resultToPrint);
     });
