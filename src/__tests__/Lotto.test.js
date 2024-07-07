@@ -1,5 +1,5 @@
 import { describe, test, expect } from "vitest";
-import { Lotto } from "../domain/index.js";
+import { Lotto } from "../model/index.js";
 
 describe("Lotto 클래스 테스트.", () => {
   test.each([

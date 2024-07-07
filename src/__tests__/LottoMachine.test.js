@@ -1,5 +1,5 @@
 import { describe, test, expect } from "vitest";
-import { LottoMachine } from "../domain/index.js";
+import { LottoMachine } from "../model/index.js";
 
 describe("LottoMachine 클래스 테스트", () => {
   test("로또를 구입할 때 정수가 아닌 값을 받으면 오류가 발생한다.", () => {

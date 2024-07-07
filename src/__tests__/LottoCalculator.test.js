@@ -4,7 +4,7 @@ import {
   WinningLotto,
   LottoCalculator,
   Lotto,
-} from "../domain/index.js";
+} from "../model/index.js";
 
 describe("LottoCalculator 클래스 테스트", () => {
   test("1등부터 5등까지 당첨된 수를 가져온다.", () => {
