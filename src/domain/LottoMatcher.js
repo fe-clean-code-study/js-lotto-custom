@@ -3,6 +3,7 @@ import {validateLottoMatcher} from "../validations/lottoMatcher.js";
 export default class LottoMatcher{
   constructor({ winningLotto, lottoTickets }) {
     LottoMatcher.#validate({ winningLotto, lottoTickets })
+
     this.winningLotto = winningLotto
     this.lottoTickets = lottoTickets
   }

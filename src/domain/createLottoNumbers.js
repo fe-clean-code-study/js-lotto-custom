@@ -1,4 +1,4 @@
-import {getRandomNumber} from "../utils/getRandomNumber.js";
+import { getRandomNumber } from "../utils/getRandomNumber.js";
 
 const createLottoNumbers = () => {
   const lottoNumbers = new Set()

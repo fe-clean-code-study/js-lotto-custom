@@ -8,7 +8,6 @@ export default class LottoPayment {
     LottoPayment.#validate({ payAmount })
 
     this.#payAmount = payAmount
-    this.paidTickets = this.createLottoTickets()
   }
 
   static #validate(lottoPaymentProps) {
@@ -18,10 +17,13 @@ export default class LottoPayment {
   }
 
   get ticketCount() {
-    return this.#payAmount / 1000
+    return Math.floor(this.#payAmount / 1000)
   }
 
   createLottoTickets() {
-    return Array.from({ length: this.ticketCount }, () => createLottoTicket(createLottoNumbers()))
+    return Array.from({ length: this.ticketCount }, () => {
+      const numbers = createLottoNumbers()
+      return createLottoTicket(numbers)
+    })
   }
 }

@@ -4,7 +4,6 @@ import LOTTO_TYPE from "../constants/lottoType.js";
 export default class Lotto{
   constructor({ type, numbers, bonusNumber = null }) {
     Lotto.#validate({ type, numbers, bonusNumber })
-
     this.type = type
     this.numbers = numbers
     this.bonusNumber = bonusNumber
