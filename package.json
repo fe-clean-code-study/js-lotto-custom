@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "로또 미션을 통해서 학습하는 클린코드",
   "main": "./src/main.js",
-  "type":  "module",
+  "type": "module",
   "scripts": {
     "start": "node src/main.js",
     "start:watch": "node --watch src/main.js",
@@ -14,5 +14,8 @@
   "license": "ISC",
   "devDependencies": {
     "vitest": "^1.6.0"
+  },
+  "dependencies": {
+    "clean-code-rule-toolkit": "^1.0.3"
   }
 }
