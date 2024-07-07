@@ -1,5 +1,6 @@
 import ConsolePrinter from "../service/ConsolePrinter.js";
 import ConsoleReader from "../service/ConsoleReader.js";
+import formatCurrency from "../utils/formatCurrency.js";
 
 export default class LottoSystemViewer{
   constructor() {
@@ -37,7 +38,7 @@ export default class LottoSystemViewer{
 
   displayLottoTickets({ lottoData }) {
     lottoData.lottoTickets.forEach(({ numbers }) => {
-      const numbersForPrint = numbers.map(number => `${number}`.padStart(2, '0'))
+      const numbersForPrint = numbers.map(number => `${number}`.padStart(2, '0')).sort()
       this.printer.printWithTemplate('lottoTicket', numbersForPrint)
     })
     this.printer.lineBreak()
@@ -49,7 +50,7 @@ export default class LottoSystemViewer{
     this.printer.printWithTemplate('line')
 
     lottoRankingResult.forEach(({ rank, matchCount, bonusMatch, profit, ticketList }) => {
-      const resultForPrint = [rank, matchCount, profit, ticketList.length]
+      const resultForPrint = [rank, matchCount, formatCurrency(profit), ticketList.length]
       if (bonusMatch) {
         this.printer.printWithTemplate('rankingWithBonus', resultForPrint)
       }
