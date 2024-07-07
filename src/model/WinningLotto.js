@@ -10,6 +10,11 @@ class WinningLotto extends Lotto {
 
   constructor(lottoNumbers, bonusNumber) {
     super(lottoNumbers);
+
+    if (bonusNumber === undefined) {
+      return (bonusNumber) => new WinningLotto(lottoNumbers, bonusNumber);
+    }
+
     WinningLotto.#validateBonusNumber(this.numbers, bonusNumber);
 
     this.#bonusNumber = bonusNumber;
@@ -17,10 +22,6 @@ class WinningLotto extends Lotto {
 
   get bonusNumber() {
     return this.#bonusNumber;
-  }
-
-  static createWithBonusLater(lottoNumbers) {
-    return (bonusNumber) => new WinningLotto(lottoNumbers, bonusNumber);
   }
 
   static #validateBonusNumber(winningNumbers, bonusNumber) {
