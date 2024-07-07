@@ -12,8 +12,8 @@ export default class LottoSystem {
     this.lottoData = {
       winningLotto: null,
       lottoTickets: [],
+      paidAmount: 0
     };
-    this.payAmount = 0;
   }
 
   static #validate(lottoSystemProps) {
@@ -23,12 +23,21 @@ export default class LottoSystem {
   }
 
   setWinningLotto(winningNumbers, bonusNumber) {
-    this.lottoData.winningLotto = createWinningLotto(winningNumbers, bonusNumber);
+    this.#setLottoData({
+      winningLotto: createWinningLotto(winningNumbers, bonusNumber)
+    })
   }
 
   payLottoTicket(payAmount) {
-    this.lottoData.lottoTickets = LottoPayment.createLottoTickets({ payAmount });
-    this.payAmount = payAmount;
+    const { lottoTickets, paidAmount } = LottoPayment.createLottoTickets({ payAmount })
+    this.#setLottoData({
+      lottoTickets,
+      paidAmount
+    })
+  }
+
+  #setLottoData(newData) {
+    this.lottoData = { ...this.lottoData, ...newData };
   }
 
   get ticketCount() {
@@ -50,6 +59,6 @@ export default class LottoSystem {
   }
 
   get profitRatio() {
-    return parseFloat(((this.profitAmount / this.payAmount) * 100).toFixed(2));
+    return parseFloat(((this.profitAmount / this.lottoData.paidAmount) * 100).toFixed(2));
   }
 }

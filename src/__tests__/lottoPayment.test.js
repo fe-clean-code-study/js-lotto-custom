@@ -19,10 +19,9 @@ describe('로또 결제 테스트', () => {
   });
 
   test('1000원 당 1장의 로또 티켓을 발행해야 한다.', () => {
-    expect(
-      LottoPayment.createLottoTickets({
-        payAmount: 8000,
-      }).length,
-    ).toBe(8);
+    const { lottoTickets } = LottoPayment.createLottoTickets({
+      payAmount: 8000,
+    })
+    expect(lottoTickets.length).toBe(8);
   });
 });
