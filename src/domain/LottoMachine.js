@@ -35,6 +35,14 @@ class LottoMachine {
   }
 
   static #createLotto() {
+    const sortedlottoNumbers = LottoMachine.#getLottoNumbers().toSorted(
+      (a, b) => a - b
+    );
+
+    return new Lotto(sortedlottoNumbers);
+  }
+
+  static #getLottoNumbers() {
     const lottoNumbers = [];
     const addLottoNumber = (number) => {
       const nextLottoNumbers = lottoNumbers.concat(number);
@@ -42,12 +50,16 @@ class LottoMachine {
     };
 
     while (lottoNumbers.length < Lotto.NUMBERS_SIZE) {
-      const randomNumber = getRandomNumber(Lotto.MIN_NUMBER, Lotto.MAX_NUMBER);
+      const lottoNumber = LottoMachine.#getLottoNumber();
 
-      addLottoNumber(randomNumber);
+      addLottoNumber(lottoNumber);
     }
 
-    return new Lotto(lottoNumbers);
+    return lottoNumbers;
+  }
+
+  static #getLottoNumber() {
+    return getRandomNumber(Lotto.MIN_NUMBER, Lotto.MAX_NUMBER);
   }
 
   static #countLotto(price) {
