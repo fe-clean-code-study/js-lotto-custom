@@ -1,5 +1,6 @@
 import { LottoView } from '../View/LottoView.js';
 import { LottoGame } from '../model/LottoGame.js';
+import { isValidInteger } from '../util/isValidInteger.js';
 
 export class LottoController {
   private view: LottoView;
@@ -19,6 +20,10 @@ export class LottoController {
 
   public async purchaseTickets() {
     const receivedMoney = await this.view.getMoney();
+
+    if (!isValidInteger(receivedMoney))
+      throw new Error('금액은 정수로 입력해야 합니다.');
+
     this.lottoGame.setTickets(receivedMoney);
   }
 
@@ -58,7 +63,14 @@ export class LottoController {
 
   private async getWinningLotto() {
     const numbers = await this.view.getWinningNumbers();
+
+    if (numbers.some((number) => !isValidInteger(number)))
+      throw new Error('로또 번호는 정수로 입력해야 합니다.');
+
     const bonusNumber = await this.view.getWinningBonusNumber();
+
+    if (!isValidInteger(bonusNumber))
+      throw new Error('보너스 번호는 정수로 입력해야 합니다.');
 
     return { numbers, bonusNumber };
   }
