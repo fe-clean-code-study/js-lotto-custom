@@ -67,6 +67,7 @@ describe('로또 시스템 테스트', async () => {
         profit: 1000,
         rank: 1,
         matchCount: 3,
+        bonusMatch: 'false',
       },
     ];
     expect(

@@ -11,7 +11,7 @@ export const lottoSystemValidations = {
     errorMessage: '랭킹 데이터에 유효하지 않은 값이(matchCount) 포함되어 있습니다.',
   },
   validBonusMatches: {
-    check: ({ rankingData }) => rankingData.every(({ bonusMatch }) => typeof bonusMatch === 'boolean'),
+    check: ({ rankingData }) => rankingData.every(({ bonusMatch }) => bonusMatch === undefined || typeof bonusMatch === 'boolean'),
     errorMessage: '랭킹 데이터에 유효하지 않은 값이(bonusMatch) 포함되어 있습니다.',
   },
   validProfits: {

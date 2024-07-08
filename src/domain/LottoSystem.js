@@ -3,6 +3,7 @@ import LottoPayment from './LottoPayment.js';
 import LottoMatcher from './LottoMatcher.js';
 import LOTTO_RANKING_DATA from '../constants/lottoRankingData.js';
 import { validateLottoSystem } from '../validations/lottoSystem.js';
+import cloneDeep from "../utils/cloneDeep.js";
 
 export default class LottoSystem {
   #rankingData
@@ -48,7 +49,7 @@ export default class LottoSystem {
   }
 
   get lottoTickets() {
-    return this.#lottoData.lottoTickets
+    return cloneDeep(this.#lottoData.lottoTickets);
   }
 
   get ticketCount() {
@@ -57,10 +58,13 @@ export default class LottoSystem {
 
   get lottoRankingResult() {
     const lottoMatchResult = LottoMatcher.matchLotto(this.#lottoData);
+
     return this.#rankingData.map((data) => ({
       ...data,
       ticketList: lottoMatchResult
-        .filter(({ matchCount, bonusMatch }) => matchCount === data.matchCount && bonusMatch === data.bonusMatch)
+        .filter(({ matchCount, bonusMatch }) =>
+          matchCount === data.matchCount
+          && (data.bonusMatch === undefined || bonusMatch === data.bonusMatch))
         .map(({ lotto }) => lotto),
     }));
   }
@@ -70,6 +74,6 @@ export default class LottoSystem {
   }
 
   get profitRatio() {
-    return parseFloat(((this.profitAmount / this.#lottoData.paidAmount) * 100).toFixed(2));
+    return parseFloat(((this.profitAmount / this.paidAmount) * 100).toFixed(2));
   }
 }

@@ -36,8 +36,8 @@ export default class LottoSystemViewer {
     this.printer.printWithTemplate('paidCount', [ticketCount]);
   }
 
-  displayLottoTickets({ lottoData }) {
-    lottoData.lottoTickets.forEach(({ numbers }) => {
+  displayLottoTickets({ lottoTickets }) {
+    lottoTickets.forEach(({ numbers }) => {
       const numbersForPrint = numbers.map((number) => `${number}`.padStart(2, '0')).sort();
       this.printer.printWithTemplate('lottoTicket', numbersForPrint);
     });
