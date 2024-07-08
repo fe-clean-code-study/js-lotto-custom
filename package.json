@@ -3,16 +3,20 @@
   "version": "1.0.0",
   "description": "로또 미션을 통해서 학습하는 클린코드",
   "main": "./src/main.js",
-  "type":  "module",
+  "type": "module",
   "scripts": {
-    "start": "node src/main.js",
-    "start:watch": "node --watch src/main.js",
+    "start": "node dist/main.js",
+    "start:watch": "node --watch dist/main.js",
+    "build": "tsc",
+    "clean": "tsc --build --clean",
     "test": "vitest"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/node": "^20.14.10",
+    "typescript": "^5.5.3",
     "vitest": "^1.6.0"
   }
 }
