@@ -1,14 +1,17 @@
-import LottoSystemController from './domain/LottoSystemController.js';
+import LottoSystemControl from './domain/LottoSystemControl.js';
 import LottoSystem from './domain/LottoSystem.js';
-import LOTTO_RANKING_DATA from './constants/lottoRankingData.js';
-import LottoSystemViewer from './domain/LottoSystemViewer.js';
+import LOTTO_RANKING_RULE from './constants/lottoRankingRule.js';
+import LottoSystemView from './domain/LottoSystemView.js';
+
 async function main() {
-  await new LottoSystemController({
+  const lottoSystemControl = new LottoSystemControl({
     lottoSystem: new LottoSystem({
-      rankingData: LOTTO_RANKING_DATA,
+      rankingRule: LOTTO_RANKING_RULE
     }),
-    viewer: new LottoSystemViewer(),
-  }).run();
+    viewer: new LottoSystemView()
+  });
+
+  await lottoSystemControl.run();
 }
 
 main();

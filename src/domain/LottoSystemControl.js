@@ -1,4 +1,4 @@
-export default class LottoSystemController {
+export default class LottoSystemControl {
   constructor({ lottoSystem, viewer }) {
     this.lottoSystem = lottoSystem;
     this.viewer = viewer;

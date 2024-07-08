@@ -14,8 +14,8 @@ describe('로또 시스템 테스트', async () => {
     createLottoNumbers.mockImplementation(originalCreateLottoNumbers);
   });
 
-  test('로또 시스템은 순위가 올바르게 매겨진 랭킹 데이터만 사용한다.', () => {
-    const rankingDataHasInvalidRank1 = [
+  test('로또 시스템은 순위가 올바르게 매겨진 랭킹 규칙만 사용한다.', () => {
+    const rankingRuleHasInvalidRank1 = [
       {
         matchCount: 3,
         bonusMatch: false,
@@ -26,11 +26,11 @@ describe('로또 시스템 테스트', async () => {
     expect(
       () =>
         new LottoSystem({
-          rankingData: rankingDataHasInvalidRank1,
+          rankingRule: rankingRuleHasInvalidRank1,
         }),
     ).toThrow(lottoSystemValidations.validRanks.errorMessage);
 
-    const rankingDataHasInvalidRank2 = [
+    const rankingRuleHasInvalidRank2 = [
       {
         matchCount: 3,
         bonusMatch: false,
@@ -41,13 +41,13 @@ describe('로또 시스템 테스트', async () => {
     expect(
       () =>
         new LottoSystem({
-          rankingData: rankingDataHasInvalidRank2,
+          rankingRule: rankingRuleHasInvalidRank2,
         }),
     ).toThrow(lottoSystemValidations.hasAllRanks.errorMessage);
   });
 
-  test('로또 시스템은 유효한 matchCount, bonus, profit 이 포함된 랭킹 데이터만 사용한다.', () => {
-    const rankingDataHasInvalidMatchCount = [
+  test('로또 시스템은 유효한 matchCount, bonus, profit 이 포함된 랭킹 규칙만 사용한다.', () => {
+    const rankingRuleHasInvalidMatchCount = [
       {
         bonusMatch: true,
         profit: 1000,
@@ -58,11 +58,11 @@ describe('로또 시스템 테스트', async () => {
     expect(
       () =>
         new LottoSystem({
-          rankingData: rankingDataHasInvalidMatchCount,
+          rankingRule: rankingRuleHasInvalidMatchCount,
         }),
     ).toThrow(lottoSystemValidations.validMatchCounts.errorMessage);
 
-    const rankingDataHasInvalidBonusMatch = [
+    const rankingRuleHasInvalidBonusMatch = [
       {
         profit: 1000,
         rank: 1,
@@ -73,11 +73,11 @@ describe('로또 시스템 테스트', async () => {
     expect(
       () =>
         new LottoSystem({
-          rankingData: rankingDataHasInvalidBonusMatch,
+          rankingRule: rankingRuleHasInvalidBonusMatch,
         }),
     ).toThrow(lottoSystemValidations.validBonusMatches.errorMessage);
 
-    const rankingDataHasInvalidProfit = [
+    const rankingRuleHasInvalidProfit = [
       {
         bonusMatch: true,
         profit: '1000',
@@ -88,7 +88,7 @@ describe('로또 시스템 테스트', async () => {
     expect(
       () =>
         new LottoSystem({
-          rankingData: rankingDataHasInvalidProfit,
+          rankingRule: rankingRuleHasInvalidProfit,
         }),
     ).toThrow(lottoSystemValidations.validProfits.errorMessage);
   });

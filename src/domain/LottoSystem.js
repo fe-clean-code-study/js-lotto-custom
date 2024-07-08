@@ -1,18 +1,18 @@
 import { createWinningLotto } from './Lotto.js';
 import LottoPayment from './LottoPayment.js';
 import LottoMatcher from './LottoMatcher.js';
-import LOTTO_RANKING_DATA from '../constants/lottoRankingData.js';
+import LOTTO_RANKING_RULE from '../constants/lottoRankingRule.js';
 import { validateLottoSystem } from '../validations/lottoSystem.js';
 import cloneDeep from "../utils/cloneDeep.js";
 
 export default class LottoSystem {
-  #rankingData
+  #rankingRule
   #lottoData
   
-  constructor({ rankingData = LOTTO_RANKING_DATA } = {}) {
-    LottoSystem.#validate({ rankingData });
+  constructor({ rankingRule = LOTTO_RANKING_RULE } = {}) {
+    LottoSystem.#validate({ rankingRule });
 
-    this.#rankingData = rankingData;
+    this.#rankingRule = rankingRule.sort((a, b) => b.rank - a.rank);
     this.#lottoData = {
       winningLotto: null,
       lottoTickets: [],
@@ -59,13 +59,13 @@ export default class LottoSystem {
   get lottoRankingResult() {
     const lottoMatchResult = LottoMatcher.matchLotto(this.#lottoData);
 
-    return this.#rankingData.map((data) => ({
-      ...data,
+    return this.#rankingRule.map((rule) => ({
+      ...rule,
       ticketList: lottoMatchResult
         .filter(({ matchCount, bonusMatch }) =>
-          matchCount === data.matchCount
-          && (data.bonusMatch === undefined || bonusMatch === data.bonusMatch))
-        .map(({ lotto }) => lotto),
+          this.#isSameMatchCount(matchCount, rule.matchCount)
+          && this.#isSameBonusMatch(bonusMatch, rule.bonusMatch))
+        .map(({ lotto }) => cloneDeep(lotto)),
     }));
   }
 
@@ -75,5 +75,13 @@ export default class LottoSystem {
 
   get profitRatio() {
     return parseFloat(((this.profitAmount / this.paidAmount) * 100).toFixed(2));
+  }
+
+  #isSameMatchCount(ticketMatchCount, ruleMatchCount) {
+    return ticketMatchCount === ruleMatchCount;
+  }
+
+  #isSameBonusMatch(ticketBonusMatch, ruleBonusMatch) {
+    return ruleBonusMatch === undefined || ruleBonusMatch === ticketBonusMatch;
   }
 }

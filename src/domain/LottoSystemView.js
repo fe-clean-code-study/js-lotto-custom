@@ -2,7 +2,7 @@ import ConsolePrinter from '../service/ConsolePrinter.js';
 import ConsoleReader from '../service/ConsoleReader.js';
 import formatCurrency from '../utils/formatCurrency.js';
 
-export default class LottoSystemViewer {
+export default class LottoSystemView {
   constructor() {
     this.printer = new ConsolePrinter({
       paidCount: '%{1}개를 구매했습니다.',
