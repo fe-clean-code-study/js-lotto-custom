@@ -1,5 +1,5 @@
+import { makeLotto } from "clean-code-rule-toolkit";
 import Lotto from "./domain/lotto.js";
-import { makeLotto } from "./domain/rule.js";
 import { LottoView } from "./view/lotto.js";
 
 export const winRuleSchema = {

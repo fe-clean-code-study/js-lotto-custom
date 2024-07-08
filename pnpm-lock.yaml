@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   clean-code-rule-toolkit:
-    specifier: ^1.0.3
-    version: 1.0.3
+    specifier: ^1.0.5
+    version: 1.0.5
 
 devDependencies:
   vitest:
@@ -455,8 +455,8 @@ packages:
       get-func-name: 2.0.2
     dev: true
 
-  /clean-code-rule-toolkit@1.0.3:
-    resolution: {integrity: sha512-vaYbNMK8fAGoiT7W8uY/9UdCTq9NqI2ayPjw1NOD8Voq/8Loj4oAAi+FXyKKnh1q+6t/3BxQCWGJf1WwENVXmA==}
+  /clean-code-rule-toolkit@1.0.5:
+    resolution: {integrity: sha512-ezyguFB3nU+1Te/soCYgduSclPl9ggHs23POvYdrX51XvjlfeTD44SAQtXwF+8+O3dbHFBMktTCaK4ZDOAhePg==}
     dev: false
 
   /confbox@0.1.7:

@@ -16,6 +16,6 @@
     "vitest": "^1.6.0"
   },
   "dependencies": {
-    "clean-code-rule-toolkit": "^1.0.3"
+    "clean-code-rule-toolkit": "^1.0.5"
   }
 }
