@@ -28,8 +28,8 @@ export default class Lotto {
 
     const lottoSet = new Set(lotto);
 
-    if (lottoSet.size !== Lotto.DEFAULT_LENGTH) {
-      return `일반 로또 번호의 개수는 ${Lotto.DEFAULT_LENGTH}개 여야 합니다.`;
+    if (lottoSet.size !== LottoRule.DEFAULT_LENGTH) {
+      return `일반 로또 번호의 개수는 ${LottoRule.DEFAULT_LENGTH}개 여야 합니다.`;
     }
 
     return undefined;

@@ -7,7 +7,6 @@ export default class WinLotto extends Lotto {
 
   constructor(lotto) {
     super(lotto);
-    this._winLotto = undefined;
     this.set(lotto);
   }
 
@@ -38,14 +37,14 @@ export default class WinLotto extends Lotto {
     }
 
     const accordCount = accord(
-      this._winLotto.slice(0, LottoRule.DEFAULT_LENGTH),
+      this.get().slice(0, LottoRule.DEFAULT_LENGTH),
       compareLotto,
     );
     const isBonusCorrect = compareLotto.includes(this._winLotto.at(-1));
 
     return isBonusCorrect
-      ? WinLotto.RANK_BY_ACCORD[accordCount].bonus
-      : WinLotto.RANK_BY_ACCORD[accordCount].base;
+      ? LottoRule.RANK_BY_ACCORD[accordCount].bonus
+      : LottoRule.RANK_BY_ACCORD[accordCount].base;
   }
 
   static getLottoError(lotto) {

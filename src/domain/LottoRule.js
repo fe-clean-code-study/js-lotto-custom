@@ -3,7 +3,7 @@ import { changeStandardMoneyString } from '../utils/String.js';
 
 export default class LottoRule {
   static RANK_BY_ACCORD = Object.freeze({
-    3: { bonus: 5, base: 3 },
+    3: { bonus: 5, base: 5 },
     4: { bonus: 4, base: 4 },
     5: { bonus: 2, base: 3 },
     6: { bonus: 1, base: 1 },
