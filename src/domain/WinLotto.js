@@ -68,7 +68,10 @@ export default class WinLotto extends Lotto {
       return 'bonusNumber 가 숫자가 아닙니다.';
     }
 
-    if (bonusNumber < Lotto.MIN_NUMBER || Lotto.MAX_NUMBER < bonusNumber) {
+    if (
+      bonusNumber < LottoRule.MIN_NUMBER ||
+      LottoRule.MAX_NUMBER < bonusNumber
+    ) {
       return 'bonusNumber 는 1 ~ 45 사이여야 합니다.';
     }
 
