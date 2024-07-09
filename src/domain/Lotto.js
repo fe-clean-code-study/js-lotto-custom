@@ -11,7 +11,7 @@ export default class Lotto {
     const lottoError = Lotto.getLottoError(lotto);
 
     if (lottoError !== undefined) {
-      return lottoError;
+      throw new Error(lottoError);
     }
 
     this._lotto = lotto;
