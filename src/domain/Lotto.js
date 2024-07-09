@@ -1,3 +1,5 @@
+import LottoRule from './LottoRule.js';
+
 export default class Lotto {
   _lotto;
 
@@ -20,7 +22,7 @@ export default class Lotto {
   }
 
   static getLottoError(lotto) {
-    const commonError = Lotto.getCommonLottoError(lotto);
+    const commonError = LottoRule.getCommonLottoError(lotto);
 
     if (commonError !== undefined) return commonError;
 

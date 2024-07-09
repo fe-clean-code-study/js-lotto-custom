@@ -49,7 +49,7 @@ export default class WinLotto extends Lotto {
   }
 
   static getLottoError(lotto) {
-    const commonError = Lotto.getCommonLottoError(lotto);
+    const commonError = LottoRule.getCommonLottoError(lotto);
 
     if (commonError !== undefined) {
       return commonError;
