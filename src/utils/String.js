@@ -1,4 +1,4 @@
-export function makeMoneyForm(money) {
+export function changeStandardMoneyString(money) {
   const reversedMoney = String(money).split('').reverse();
   const stack = [];
 
