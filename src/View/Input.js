@@ -1,6 +1,6 @@
 import readlineAsync from '../utils/readline.js';
 import InputValidator from '../validator/View/InputValidator.js';
-import createValidator from '../validator/createValidator.js';
+import createValidator from '../utils/createValidator.js';
 
 export default class Input {
   #rl;
