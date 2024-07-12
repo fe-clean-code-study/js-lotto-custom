@@ -8,11 +8,11 @@ export default class Output {
     this.validator = createValidator(OutputValidator);
   }
 
-  print(...message) {
+  static print(...message) {
     console.log(...message);
   }
 
-  lineBreak() {
+  static lineBreak() {
     console.log('');
   }
 
