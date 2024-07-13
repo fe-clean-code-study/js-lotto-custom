@@ -5,6 +5,7 @@ import {
   validate,
 } from "../utils/index.js";
 import Lotto from "./Lotto.js";
+import LottoNumber from "./LottoNumber.js";
 
 class LottoMachine {
   static #PRICE_PER_ONE = 1000;
@@ -58,7 +59,7 @@ class LottoMachine {
   }
 
   static #getLottoNumber() {
-    return getRandomNumber(Lotto.MIN_NUMBER, Lotto.MAX_NUMBER);
+    return getRandomNumber(LottoNumber.MIN_NUMBER, LottoNumber.MAX_NUMBER);
   }
 
   static #countLotto(price) {

@@ -16,6 +16,14 @@ class LottoNumber {
     return this.#number;
   }
 
+  static get MIN_NUMBER() {
+    return LottoNumber.#MIN_NUMBER;
+  }
+
+  static get MAX_NUMBER() {
+    return LottoNumber.#MAX_NUMBER;
+  }
+
   static #validateNumber(number) {
     validate.integer(number, "로또 번호로 적합하지 않은 값입니다.");
 
