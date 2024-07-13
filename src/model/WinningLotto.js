@@ -1,6 +1,5 @@
 import { isDuplicated, throwErrorWithCondition } from "../utils/index.js";
 import Lotto from "./Lotto.js";
-import LottoNumber from "./LottoNumber.js";
 
 class WinningLotto extends Lotto {
   #bonusNumber;
@@ -8,17 +7,13 @@ class WinningLotto extends Lotto {
   constructor(numbers, bonusNumber) {
     super(numbers);
 
-    if (bonusNumber === undefined) {
-      return (bonusNumber) => new WinningLotto(numbers, bonusNumber);
-    }
-
     WinningLotto.#validateBonusNumber(this.numbers, bonusNumber);
 
-    this.#bonusNumber = new LottoNumber(bonusNumber);
+    this.#bonusNumber = bonusNumber;
   }
 
   get bonusNumber() {
-    return this.#bonusNumber.value;
+    return this.#bonusNumber;
   }
 
   static #validateBonusNumber(winningNumbers, bonusNumber) {

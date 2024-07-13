@@ -1,25 +1,51 @@
-import { inputManager } from "../service/index.js";
-import { WinningLotto } from "../model/index.js";
+import { inputManager, outputManager } from "../service/index.js";
+import { Lotto, LottoNumber, WinningLotto } from "../model/index.js";
+import { retryOnFailureAsync } from "../utils/index.js";
 
-const createWinningLotto = async () => {
-  const attachBonusNumber = await inputManager.retryScan(
+const createWinningNumbers = async () => {
+  const inputNumbers = await inputManager.scan(
     "> 당첨 번호를 입력해 주세요. ",
-    (inputValue) => {
-      const numbers = inputValue
+    (inputValue) =>
+      inputValue
+        .trim()
         .split(",")
-        .map((value) => Number(value.trim()));
+        .map((value) => value.trim())
+        .map((value) => Number(value))
+  );
 
-      return new WinningLotto(numbers);
+  const winningNumbers = new Lotto(inputNumbers);
+
+  return winningNumbers.numbers;
+};
+
+const createBonusNumber = async () => {
+  const inputNumber = await inputManager.scan(
+    "> 보너스 번호를 입력해 주세요. ",
+    (inputValue) => {
+      const trimedInputValue = inputValue.trim();
+
+      return Number(trimedInputValue);
     }
   );
 
-  const winningLotto = await inputManager.retryScan(
-    "> 보너스 번호를 입력해 주세요. ",
-    (inputValue) => {
-      const bonusNumber = Number(inputValue);
+  const bonusNumber = new LottoNumber(inputNumber);
 
-      return attachBonusNumber(bonusNumber);
-    }
+  return bonusNumber.value;
+};
+
+const createWinningLotto = async () => {
+  const winningNumbers = await retryOnFailureAsync(
+    createWinningNumbers,
+    (error) => outputManager.print(error.message)
+  );
+
+  const winningLotto = await retryOnFailureAsync(
+    async () => {
+      const bonusNumber = await createBonusNumber();
+
+      return new WinningLotto(winningNumbers, bonusNumber);
+    },
+    (error) => outputManager.print(error.message)
   );
 
   return winningLotto;
