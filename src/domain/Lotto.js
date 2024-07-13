@@ -32,4 +32,8 @@ export default class Lotto {
       0,
     );
   }
+
+  get() {
+    return [...this.#lotto];
+  }
 }

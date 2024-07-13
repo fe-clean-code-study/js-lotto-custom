@@ -74,6 +74,12 @@ describe('Lotto 도메인 클래스에 대한 단위 테스트', () => {
       }).toThrowError('로또번호의 각 번호는 1~45 사이여야 합니다.');
     },
   );
+
+  test('로또 번호를 가져올 수 있다.', () => {
+    expect(makeLottoMocking([1, 2, 3, 4, 5, 6]).get()).toStrictEqual([
+      1, 2, 3, 4, 5, 6,
+    ]);
+  });
 });
 
 function makeLottoMocking(...lotto) {
