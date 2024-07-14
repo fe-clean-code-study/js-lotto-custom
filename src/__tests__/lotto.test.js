@@ -96,5 +96,15 @@ describe('로또 테스트', () => {
     expect(new Lotto([1, 2, 3, 4, 5, 6]).numbers).toEqual([1, 2, 3, 4, 5, 6]);
   });
 
-  test('로또에서 특정 번호가 포함되어있는지 여부를 알 수 있다.', () => {});
+  test('로또에서 특정 번호가 포함되어있는지 여부를 알 수 있다.', () => {
+    const lotto1 = new Lotto([1, 2, 3, 4, 5, 6]);
+    const lotto2 = new Lotto({
+      type: LOTTO_TYPE.WINNING,
+      numbers: [1, 2, 3, 4, 5, 6],
+      bonusNumber: 7,
+    });
+
+    expect(lotto1.contain(7)).toBe(false);
+    expect(lotto2.contain(7)).toBe(true);
+  });
 });

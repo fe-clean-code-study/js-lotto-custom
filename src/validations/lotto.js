@@ -1,5 +1,6 @@
 import createValidator from './createValidator.js';
 import LOTTO_TYPE from '../constants/lottoType.js';
+import Lotto from '../domain/Lotto.js';
 
 export const lottoValidations = {
   lottoType: {
@@ -35,6 +36,10 @@ export const lottoValidations = {
       return lottoNumbers.every((number) => 1 <= number && number <= 45);
     },
     errorMessage: '모든 로또 번호는 1 이상 45 이하여야 합니다.',
+  },
+  lottoInstance: {
+    check: (lotto) => lotto instanceof Lotto,
+    errorMessage: '유효한 로또가 아닙니다.',
   },
 };
 

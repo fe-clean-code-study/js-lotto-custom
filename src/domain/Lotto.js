@@ -3,26 +3,47 @@ import LOTTO_TYPE from '../constants/lottoType.js';
 
 export default class Lotto {
   constructor(lottoProps) {
-    if (Array.isArray(lottoProps)) {
-      this.#setLotto({
-        type: LOTTO_TYPE.TICKET,
-        numbers: lottoProps,
-      });
-    } else {
-      this.#setLotto(lottoProps);
-    }
+    this.#setLotto(
+      Array.isArray(lottoProps)
+        ? {
+            type: LOTTO_TYPE.TICKET,
+            numbers: lottoProps,
+          }
+        : lottoProps,
+    );
   }
 
   #setLotto({ type, numbers, bonusNumber = null }) {
-    Lotto.#validate({ type, numbers, bonusNumber });
+    Lotto.#validateLottoProps({ type, numbers, bonusNumber });
     this.type = type;
     this.numbers = numbers;
     this.bonusNumber = bonusNumber;
   }
 
-  static #validate(lottoProps) {
+  contain(targetNumber) {
+    const totalLottoNumbers = this.type === LOTTO_TYPE.TICKET ? this.numbers : [...this.numbers, this.bonusNumber];
+    return totalLottoNumbers.includes(targetNumber);
+  }
+
+  static #validateLottoProps(lottoProps) {
     validateLotto({
       target: lottoProps,
+      validationKeys: [
+        'lottoType',
+        'lottoNumbersLength',
+        'winningLottoHasBonus',
+        'ticketLottoBonusNull',
+        'lottoEachUnique',
+        'lottoInteger',
+        'lottoRange',
+      ],
+    });
+  }
+
+  static #validateLotto(lotto) {
+    validateLotto({
+      target: lotto,
+      validationKeys: ['lottoInstance'],
     });
   }
 }
