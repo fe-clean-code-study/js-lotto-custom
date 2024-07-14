@@ -5,19 +5,19 @@ const cloneDeep = (obj) => {
 
   if (Array.isArray(obj)) {
     const clonedArray = [];
-    obj.forEach(item => {
+    obj.forEach((item) => {
       clonedArray.push(cloneDeep(item));
-    })
+    });
     return clonedArray;
   }
 
-  const clonedObj = {};
-  for (const key in obj) {
+  const clonedObj = Object.create(Object.getPrototypeOf(obj));
+  for (let key in obj) {
     if (obj.hasOwnProperty(key)) {
       clonedObj[key] = cloneDeep(obj[key]);
     }
   }
   return clonedObj;
-}
+};
 
 export default cloneDeep;

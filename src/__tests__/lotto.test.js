@@ -116,7 +116,7 @@ describe('로또 테스트', () => {
       bonusNumber: 2,
     });
 
-    expect(new Set(lotto1.match(lotto2))).toEqual(new Set([2, 3, 4, 5, 6]));
-    expect(new Set(lotto2.match(lotto1))).toEqual(new Set([2, 3, 4, 5, 6]));
+    expect(lotto1.matchNumbers(lotto2)).toEqual([3, 4, 5, 6]);
+    expect(lotto2.matchNumbers(lotto1)).toEqual([3, 4, 5, 6]);
   });
 });

@@ -1,6 +1,7 @@
 import LottoSystem from '../domain/LottoSystem.js';
 import { lottoSystemValidations } from '../validations/lottoSystem.js';
 import createLottoNumbers from '../domain/createLottoNumbers.js';
+import Lotto from '../domain/Lotto.js';
 
 vi.mock('../domain/createLottoNumbers');
 
@@ -101,22 +102,15 @@ describe('로또 시스템 테스트', async () => {
     expect(lottoSystem.paidAmount).toBe(10000);
   });
 
-  test('로또 시스템은 발행한 로또들을 등수 별로 분류할 수 있다.', () => {
-    createLottoNumbers
-      .mockReturnValueOnce([1, 2, 3, 4, 5, 6]) // 1등
-      .mockReturnValueOnce([1, 2, 3, 4, 5, 7]) // 2등
-      .mockReturnValueOnce([1, 2, 3, 4, 5, 7]) // 2등
-      .mockReturnValueOnce([1, 2, 3, 4, 15, 16]) // 4등
-      .mockReturnValueOnce([1, 2, 3, 4, 15, 16]) // 4등
-      .mockReturnValueOnce([1, 2, 3, 4, 15, 16]); // 4등
-
+  test('로또 시스템에서 로또 티켓의 등수를 확인할 수 있다.', () => {
     const lottoSystem = new LottoSystem();
     lottoSystem.setWinningLotto([1, 2, 3, 4, 5, 6], 7);
-    lottoSystem.payLottoTicket(6000);
 
-    expect(lottoSystem.lottoRankingResult.find(({ rank }) => rank === 1).ticketList.length).toBe(1);
-    expect(lottoSystem.lottoRankingResult.find(({ rank }) => rank === 2).ticketList.length).toBe(2);
-    expect(lottoSystem.lottoRankingResult.find(({ rank }) => rank === 4).ticketList.length).toBe(3);
+    expect(lottoSystem.getRank(new Lotto([1, 2, 3, 4, 5, 6]))).toBe(1);
+    expect(lottoSystem.getRank(new Lotto([1, 2, 3, 4, 5, 7]))).toBe(2);
+    expect(lottoSystem.getRank(new Lotto([1, 2, 3, 4, 5, 8]))).toBe(3);
+    expect(lottoSystem.getRank(new Lotto([1, 2, 3, 4, 7, 8]))).toBe(4);
+    expect(lottoSystem.getRank(new Lotto([1, 2, 3, 7, 8, 9]))).toBe(5);
   });
 
   test('로또 시스템은 총 수익을 계산할 수 있다.', () => {

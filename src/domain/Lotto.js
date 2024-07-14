@@ -14,19 +14,12 @@ export default class Lotto {
   }
 
   contain(number) {
-    return this.totalNumbers.includes(number);
+    return [...this.numbers, this.bonusNumber].includes(number);
   }
 
-  match(otherLotto) {
+  matchNumbers(otherLotto) {
     Lotto.#validateLotto(otherLotto);
-    return this.totalNumbers.filter((number) => otherLotto.contain(number));
-  }
-
-  get totalNumbers() {
-    if (this.type === LOTTO_TYPE.WINNING) {
-      return [...this.numbers, this.bonusNumber];
-    }
-    return this.numbers;
+    return this.numbers.filter((number) => otherLotto.numbers.includes(number));
   }
 
   #setLotto({ type, numbers, bonusNumber = null }) {
