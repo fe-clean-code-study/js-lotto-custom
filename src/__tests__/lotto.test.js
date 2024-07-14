@@ -107,4 +107,16 @@ describe('로또 테스트', () => {
     expect(lotto1.contain(7)).toBe(false);
     expect(lotto2.contain(7)).toBe(true);
   });
+
+  test('두 로또를 비교하여 겹치는 숫자 목록을 확인할 수 있다.', () => {
+    const lotto1 = new Lotto([1, 2, 3, 4, 5, 6]);
+    const lotto2 = new Lotto({
+      type: LOTTO_TYPE.WINNING,
+      numbers: [3, 4, 5, 6, 7, 8],
+      bonusNumber: 2,
+    });
+
+    expect(new Set(lotto1.match(lotto2))).toEqual(new Set([2, 3, 4, 5, 6]));
+    expect(new Set(lotto2.match(lotto1))).toEqual(new Set([2, 3, 4, 5, 6]));
+  });
 });

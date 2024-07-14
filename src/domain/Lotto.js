@@ -13,16 +13,32 @@ export default class Lotto {
     );
   }
 
+  contain(number) {
+    return this.totalNumbers.includes(number);
+  }
+
+  match(otherLotto) {
+    Lotto.#validateLotto(otherLotto);
+    return this.totalNumbers.filter((number) => otherLotto.contain(number));
+  }
+
+  get totalNumbers() {
+    if (this.type === LOTTO_TYPE.WINNING) {
+      return [...this.numbers, this.bonusNumber];
+    }
+    return this.numbers;
+  }
+
   #setLotto({ type, numbers, bonusNumber = null }) {
     Lotto.#validateLottoProps({ type, numbers, bonusNumber });
     this.type = type;
     this.numbers = numbers;
     this.bonusNumber = bonusNumber;
+    this.#sortNumbers();
   }
 
-  contain(targetNumber) {
-    const totalLottoNumbers = this.type === LOTTO_TYPE.TICKET ? this.numbers : [...this.numbers, this.bonusNumber];
-    return totalLottoNumbers.includes(targetNumber);
+  #sortNumbers() {
+    this.numbers.sort((a, b) => a - b);
   }
 
   static #validateLottoProps(lottoProps) {
