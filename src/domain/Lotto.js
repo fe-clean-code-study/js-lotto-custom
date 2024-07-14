@@ -2,10 +2,11 @@ import createValidator from '../utils/createValidator.js';
 import LottoValidator from '../validator/domain/LottoValidator.js';
 
 export default class Lotto {
+  #validator;
   #lotto;
 
   constructor(...lotto) {
-    this.validator = createValidator(LottoValidator);
+    this.#validator = createValidator(LottoValidator);
     this.setLotto(...lotto);
   }
 
@@ -20,7 +21,7 @@ export default class Lotto {
       .map((number) => Number(number))
       .sort((a, b) => a - b);
 
-    this.validator({ lotto: nextLotto });
+    this.#validator({ lotto: nextLotto });
     this.#lotto = [...nextLotto];
   }
 
