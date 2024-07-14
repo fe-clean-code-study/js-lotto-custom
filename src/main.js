@@ -6,13 +6,12 @@ import {
 import { showPurchasedLottos, showWinningResults } from "./view/index.js";
 
 const main = async () => {
-  const { price, count, lottos } = await purchaseLottos();
+  const { count, lottos } = await purchaseLottos();
 
   showPurchasedLottos(count, lottos);
 
   const winningLotto = await createWinningLotto();
   const { winningCounts, rateOfReturn } = calculateWinningResults({
-    price,
     lottos,
     winningLotto,
   });

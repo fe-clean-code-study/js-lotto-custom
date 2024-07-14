@@ -1,8 +1,7 @@
 import { LottoCalculator } from "../model/index.js";
 
-const calculateWinningResults = ({ price, lottos, winningLotto }) => {
+const calculateWinningResults = ({ lottos, winningLotto }) => {
   const { winningCounts, rateOfReturn } = new LottoCalculator({
-    price,
     lottos,
     winningLotto,
   });

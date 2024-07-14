@@ -3,7 +3,7 @@ import { inputManager, outputManager } from "../service/index.js";
 import { retryOnFailureAsync } from "../utils/index.js";
 
 const purchaseLottos = async () => {
-  const { price, count, lottos } = await retryOnFailureAsync(
+  const { count, lottos } = await retryOnFailureAsync(
     async () => {
       const priceValue = await inputManager.scan(
         "> 구입 금액을 입력해 주세요. ",
@@ -19,7 +19,7 @@ const purchaseLottos = async () => {
     (error) => outputManager.print(error.message)
   );
 
-  return { price, count, lottos };
+  return { count, lottos };
 };
 
 export default purchaseLottos;

@@ -1,10 +1,10 @@
-import { LOTTO_RANKING_INFO } from "../constants/index.js";
+import { LOTTO_PRICE, LOTTO_RANKING_INFO } from "../constants/index.js";
 
 class LottoCalculator {
   #winningCounts;
   #rateOfReturn;
 
-  constructor({ price, lottos, winningLotto }) {
+  constructor({ lottos, winningLotto }) {
     this.#winningCounts = {
       1: 0,
       2: 0,
@@ -18,6 +18,9 @@ class LottoCalculator {
       lottos,
       winningLotto,
     });
+
+    const price = lottos.length * LOTTO_PRICE;
+
     this.#rateOfReturn = LottoCalculator.#calcRateOfReturn(
       this.#winningCounts,
       price
