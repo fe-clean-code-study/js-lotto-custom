@@ -1,11 +1,32 @@
 class LottoCalculator {
-  static #LOTTO_PRIZES = {
-    1: 2_000_000_000,
-    2: 30_000_000,
-    3: 1_500_000,
-    4: 50000,
-    5: 5000,
-  };
+  static #LOTTO_RANKING_INFO = [
+    {
+      ranking: 1,
+      matchingCount: 6,
+      prizeMoney: 2_000_000_000,
+    },
+    {
+      ranking: 2,
+      matchingCount: 5,
+      isBonusMatch: true,
+      prizeMoney: 30_000_000,
+    },
+    {
+      ranking: 3,
+      matchingCount: 5,
+      prizeMoney: 1_500_000,
+    },
+    {
+      ranking: 4,
+      matchingCount: 4,
+      prizeMoney: 50_000,
+    },
+    {
+      ranking: 5,
+      matchingCount: 3,
+      prizeMoney: 5_000,
+    },
+  ];
 
   #winningCounts;
   #rateOfReturn;
@@ -41,11 +62,11 @@ class LottoCalculator {
   static #updateWinningCounts({ winningCounts, lottos, winningLotto }) {
     const copiedWinningCounts = { ...winningCounts };
     const lottoMatchResults = lottos.map((lotto) => ({
-      matchedCount: LottoCalculator.#matchLottoNumbers(
+      matchingCount: LottoCalculator.#matchLottoNumbers(
         lotto.numbers,
         winningLotto.numbers
       ),
-      isMatchedBonusNumber: lotto.numbers.includes(winningLotto.bonusNumber),
+      isBonusMatch: lotto.numbers.includes(winningLotto.bonusNumber),
     }));
 
     return LottoCalculator.#countLottoWins(
@@ -61,16 +82,14 @@ class LottoCalculator {
 
   static #countLottoWins(lottoMatchResults, winningCounts) {
     return lottoMatchResults.reduce(
-      (counts, { matchedCount, isMatchedBonusNumber }) => {
-        const prizeMap = {
-          6: 1,
-          5: isMatchedBonusNumber ? 2 : 3,
-          4: 4,
-          3: 5,
-        };
+      (counts, { matchingCount, isBonusMatch }) => {
+        const ranking = LottoCalculator.#getRanking(
+          matchingCount,
+          isBonusMatch
+        );
 
-        if (prizeMap[matchedCount]) {
-          counts[prizeMap[matchedCount]] += 1;
+        if (ranking) {
+          counts[ranking] += 1;
         }
 
         return counts;
@@ -81,10 +100,28 @@ class LottoCalculator {
 
   static #calcRateOfReturn(winningCounts, price) {
     const sumOfPrize = Object.entries({ ...winningCounts })
-      .map(([ranking, count]) => LottoCalculator.#LOTTO_PRIZES[ranking] * count)
+      .map(
+        ([ranking, count]) => LottoCalculator.#getPrizeMoney(ranking) * count
+      )
       .reduce((acc, cur) => acc + cur, 0);
 
     return (sumOfPrize / price) * 100;
+  }
+
+  static #getPrizeMoney(ranking) {
+    return LottoCalculator.#LOTTO_RANKING_INFO.find(
+      (info) => info.ranking === Number(ranking)
+    ).prizeMoney;
+  }
+
+  static #getRanking(matchingCount, isBonusMatch) {
+    const currentInfo = LottoCalculator.#LOTTO_RANKING_INFO.find(
+      (info) =>
+        info.matchingCount === matchingCount &&
+        Boolean(info.isBonusMatch) === isBonusMatch
+    );
+
+    return currentInfo && currentInfo.ranking;
   }
 }
 
