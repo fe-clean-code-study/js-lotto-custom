@@ -2,7 +2,18 @@ import { validateLotto } from '../validations/lotto.js';
 import LOTTO_TYPE from '../constants/lottoType.js';
 
 export default class Lotto {
-  constructor({ type, numbers, bonusNumber = null }) {
+  constructor(lottoProps) {
+    if (Array.isArray(lottoProps)) {
+      this.#setLotto({
+        type: LOTTO_TYPE.TICKET,
+        numbers: lottoProps,
+      });
+    } else {
+      this.#setLotto(lottoProps);
+    }
+  }
+
+  #setLotto({ type, numbers, bonusNumber = null }) {
     Lotto.#validate({ type, numbers, bonusNumber });
     this.type = type;
     this.numbers = numbers;

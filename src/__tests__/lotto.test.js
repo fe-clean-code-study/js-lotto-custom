@@ -91,4 +91,10 @@ describe('로또 테스트', () => {
         }),
     ).toThrow(lottoValidations.lottoRange.errorMessage);
   });
+
+  test('숫자 리스트를 통해 로또 티켓을 생성할 수 있다.', () => {
+    expect(new Lotto([1, 2, 3, 4, 5, 6]).numbers).toEqual([1, 2, 3, 4, 5, 6]);
+  });
+
+  test('로또에서 특정 번호가 포함되어있는지 여부를 알 수 있다.', () => {});
 });
