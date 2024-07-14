@@ -1,33 +1,6 @@
-class LottoCalculator {
-  static #LOTTO_RANKING_INFO = [
-    {
-      ranking: 1,
-      matchingCount: 6,
-      prizeMoney: 2_000_000_000,
-    },
-    {
-      ranking: 2,
-      matchingCount: 5,
-      isBonusMatch: true,
-      prizeMoney: 30_000_000,
-    },
-    {
-      ranking: 3,
-      matchingCount: 5,
-      prizeMoney: 1_500_000,
-    },
-    {
-      ranking: 4,
-      matchingCount: 4,
-      prizeMoney: 50_000,
-    },
-    {
-      ranking: 5,
-      matchingCount: 3,
-      prizeMoney: 5_000,
-    },
-  ];
+import { LOTTO_RANKING_INFO } from "../constants/index.js";
 
+class LottoCalculator {
   #winningCounts;
   #rateOfReturn;
 
@@ -109,13 +82,12 @@ class LottoCalculator {
   }
 
   static #getPrizeMoney(ranking) {
-    return LottoCalculator.#LOTTO_RANKING_INFO.find(
-      (info) => info.ranking === Number(ranking)
-    ).prizeMoney;
+    return LOTTO_RANKING_INFO.find((info) => info.ranking === Number(ranking))
+      .prizeMoney;
   }
 
   static #getRanking(matchingCount, isBonusMatch) {
-    const currentInfo = LottoCalculator.#LOTTO_RANKING_INFO.find(
+    const currentInfo = LOTTO_RANKING_INFO.find(
       (info) =>
         info.matchingCount === matchingCount &&
         Boolean(info.isBonusMatch) === isBonusMatch
