@@ -14,20 +14,20 @@ describe("LottoNumber 클래스 테스트", () => {
     "로또 번호로 적합하지 않은 값($value)을 할당하면 오류가 발생한다.",
     ({ value }) => {
       expect(() => new LottoNumber(value)).toThrowError(
-        "로또 번호로 적합하지 않은 값입니다."
+        "[ERR_001] LottoNumber 클래스의 생성자 인수는 정수여야 합니다."
       );
     }
   );
 
   test("로또 번호가 1보다 작으면 오류가 발생한다.", () => {
     expect(() => new LottoNumber(0)).toThrowError(
-      "로또 번호는 1보다 커야 합니다."
+      "[ERR_001] LottoNumber 클래스의 생성자 인수는 1이상이어야 합니다."
     );
   });
 
   test("로또 번호가 45보다 크면 오류가 발생한다.", () => {
     expect(() => new LottoNumber(46)).toThrowError(
-      "로또 번호는 45보다 작아야 합니다."
+      "[ERR_001] LottoNumber 클래스의 생성자 인수는 45이하여야 합니다."
     );
   });
 
