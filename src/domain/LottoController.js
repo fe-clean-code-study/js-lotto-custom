@@ -39,7 +39,7 @@ export default class LottoController {
     const quantity = LottoRule.exchange(money);
 
     return [...new Array(quantity)].map(
-      new this.lotto(LottoRule.generateLottoNumbers()),
+      () => new this.lotto(LottoRule.generateLottoNumbers()),
     );
   }
 
