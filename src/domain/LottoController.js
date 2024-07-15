@@ -24,7 +24,7 @@ export default class LottoController {
       this.view.printWinningResult({ ...details, prizes });
       this.view.printRevenue(prize / purchases);
 
-      const restart = await this.restart();
+      const restart = await this.getRestart();
 
       if (restart === 'n' || restart === 'N') {
         break;
