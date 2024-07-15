@@ -26,7 +26,7 @@ export default class View {
     return this.input.readInput('> 구매 금액을 입력해주세요. : ', options);
   }
 
-  async inputWinningLotto(options) {
+  async inputWinLotto(options) {
     return this.input.readInput('> 당첨 번호를 입력해주세요. : ', options);
   }
 

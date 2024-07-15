@@ -47,7 +47,7 @@ export default class LottoController {
 
   async getwinLotto() {
     const validator = createValidator(LottoValidation);
-    const winLotto = await this.view.inputwinLotto({
+    const winLotto = await this.view.inputWinLotto({
       postProcessFn: (value) =>
         value.split(',').map((number) => Number(number)),
       validate: (value) => validator({ common: value }),
