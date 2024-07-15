@@ -25,6 +25,19 @@ class LottoMachine {
     return [...this.#lottos];
   }
 
+  static #validatePrice(price) {
+    validate.integer(price, "로또 구입 금액으로 정수를 입력해야 합니다.");
+
+    throwErrorWithCondition(
+      price < LOTTO.PRICE,
+      `로또 구입 금액은 ${LOTTO.PRICE}원이상이어야 합니다.`
+    );
+  }
+
+  static #countLotto(price) {
+    return Math.floor(price / LOTTO.PRICE);
+  }
+
   static #createLottos(count) {
     return Array.from({ length: count }).map(LottoMachine.#createLotto);
   }
@@ -40,19 +53,6 @@ class LottoMachine {
     const lottoNumbers = range(LOTTO.MIN_NUMBER, LOTTO.MAX_NUMBER + 1);
 
     return shuffle(lottoNumbers).slice(0, LOTTO.NUMBERS_SIZE);
-  }
-
-  static #countLotto(price) {
-    return Math.floor(price / LOTTO.PRICE);
-  }
-
-  static #validatePrice(price) {
-    validate.integer(price, "로또 구입 금액으로 정수를 입력해야 합니다.");
-
-    throwErrorWithCondition(
-      price < LOTTO.PRICE,
-      `로또 구입 금액은 ${LOTTO.PRICE}원이상이어야 합니다.`
-    );
   }
 }
 
