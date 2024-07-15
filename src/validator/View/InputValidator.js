@@ -7,22 +7,24 @@ const InputValidator = {
   },
   options: {
     checkType: (value) =>
-      typeof value === 'object' || 'options 는 개체 타입이어야 합니다.',
+      typeof value === 'object' || 'options 는 객체 타입이어야 합니다.',
     checkHasPostProcessFn: (value) =>
-      value.hasProperty('postProcessFn') ||
+      'postProcessFn' in value ||
       'options 는 postProcessFn 프로퍼티를 가지고 있어야 합니다.',
-    checkHasValidation: (value) =>
-      value.hasProperty('validation') ||
+    checkHasValidate: (value) =>
+      'validate' in value ||
       'options 는 validation 프로퍼티를 가지고 있어야 합니다.',
   },
   postProcessFn: {
     checkType: (value) =>
-      (value !== undefined && typeof value !== 'function') ||
+      value === undefined ||
+      typeof value === 'function' ||
       'postProcessFn 는 함수여야 합니다.',
   },
   validate: {
     checkType: (value) =>
-      (value !== undefined && typeof value !== 'function') ||
+      value === undefined ||
+      typeof value === 'function' ||
       'validate 는 함수여야 합니다.',
   },
   restart: {
