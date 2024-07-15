@@ -24,14 +24,16 @@ export default class WinLotto extends Lotto {
 
   getRank(lotto) {
     const bonusCorrect = this.isBonusCorrect(lotto);
-    const accordCount = this.accord(lotto) - bonusCorrect ? 1 : 0;
+    const accordCount = this.accord(lotto) - (bonusCorrect ? 1 : 0);
 
     for (const rank in LottoRule.winningInfo) {
       if (accordCount === LottoRule.winningInfo[rank].accord) {
+        if (LottoRule.winningInfo[rank].checkBonus === false) {
+          return rank;
+        }
         if (LottoRule.winningInfo[rank].checkBonus && bonusCorrect) {
           return rank;
         }
-        return rank;
       }
     }
 
