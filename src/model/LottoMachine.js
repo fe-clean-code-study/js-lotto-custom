@@ -26,11 +26,14 @@ class LottoMachine {
   }
 
   static #validatePrice(price) {
-    validate.integer(price, "로또 구입 금액으로 정수를 입력해야 합니다.");
+    validate.integer(
+      price,
+      "[ERR_004] LottoMachine 클래스의 생성자 인수는 정수여야 합니다."
+    );
 
     throwErrorWithCondition(
       price < LOTTO.PRICE,
-      `로또 구입 금액은 ${LOTTO.PRICE}원이상이어야 합니다.`
+      `[ERR_004] LottoMachine 클래스의 생성자 인수는 ${LOTTO.PRICE}이상이어야 합니다.`
     );
   }
 

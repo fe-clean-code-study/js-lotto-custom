@@ -20,16 +20,19 @@ class Lotto {
   }
 
   static #validateNumbers(lottoNumbers) {
-    validate.array(lottoNumbers, "로또 번호로 적합하지 않은 값입니다.");
+    validate.array(
+      lottoNumbers,
+      "[ERR_002] Lotto 클래스의 생성자 인수는 배열이어야 합니다."
+    );
 
     throwErrorWithCondition(
       lottoNumbers.length !== LOTTO.NUMBERS_SIZE,
-      `로또 번호는 ${LOTTO.NUMBERS_SIZE}개여야 합니다.`
+      `[ERR_002] Lotto 클래스의 생성자 인수의 길이는 ${LOTTO.NUMBERS_SIZE}이어야 합니다.`
     );
 
     throwErrorWithCondition(
       isDuplicated(lottoNumbers),
-      "중복되는 로또 번호가 있습니다."
+      "[ERR_002] Lotto 클래스의 생성자 인수인 배열에 중복되는 값이 있습니다."
     );
   }
 }

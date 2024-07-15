@@ -19,7 +19,7 @@ class WinningLotto extends Lotto {
   static #validateBonusNumber(winningNumbers, bonusNumber) {
     throwErrorWithCondition(
       isDuplicated(winningNumbers.concat(bonusNumber)),
-      "당첨 번호 중에 보너스 번호와 중복되는 번호가 있습니다."
+      "[ERR_003] WinningLotto 클래스의 생성자 인수인 winningNumbers 중에 bonusNumber와 중복됩니다."
     );
   }
 }

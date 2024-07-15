@@ -15,16 +15,19 @@ class LottoNumber {
   }
 
   static #validateNumber(number) {
-    validate.integer(number, "로또 번호로 적합하지 않은 값입니다.");
+    validate.integer(
+      number,
+      "[ERR_001] LottoNumber 클래스의 생성자 인수는 정수여야 합니다."
+    );
 
     throwErrorWithCondition(
       number < LOTTO.MIN_NUMBER,
-      `로또 번호는 ${LOTTO.MIN_NUMBER}보다 커야 합니다.`
+      `[ERR_001] LottoNumber 클래스의 생성자 인수는 ${LOTTO.MIN_NUMBER}이상이어야 합니다.`
     );
 
     throwErrorWithCondition(
       LOTTO.MAX_NUMBER < number,
-      `로또 번호는 ${LOTTO.MAX_NUMBER}보다 작아야 합니다.`
+      `[ERR_001] LottoNumber 클래스의 생성자 인수는 ${LOTTO.MAX_NUMBER}이하여야 합니다.`
     );
   }
 }
