@@ -36,7 +36,7 @@ export default class LottoSystemView {
 
   async readKeepGoing({ leftPaidAmount }) {
     this.printer.printWithTemplate('replay', [formatCurrency(leftPaidAmount)]);
-    const answer = await this.reader.read('다시하기 = S / 그민두기 = Q : ');
+    const answer = await this.reader.read('다시하기 = S / 그민두기 = 아무키 : ');
     return answer.toUpperCase() === 'S';
   }
 
