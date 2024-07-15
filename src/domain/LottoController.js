@@ -21,7 +21,7 @@ export default class LottoController {
       const { prize, purchases, details, prizes } =
         winLotto.getWinningResult(lottos);
 
-      this.view.printWinningResult({ ...details, prizes });
+      this.view.printWinningResult({ ...details, ...prizes });
       this.view.printRevenue(prize / purchases);
 
       const restart = await this.getRestart();
