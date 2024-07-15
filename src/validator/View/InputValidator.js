@@ -25,6 +25,14 @@ const InputValidator = {
       (value !== undefined && typeof value !== 'function') ||
       'validate 는 함수여야 합니다.',
   },
+  restart: {
+    checkValue: (value) =>
+      value === 'y' ||
+      value === 'Y' ||
+      value === 'n' ||
+      value === 'N' ||
+      '재시작 여부는 영문자 y 혹은 n 의 값이어야 합니다.',
+  },
 };
 
 export default InputValidator;
