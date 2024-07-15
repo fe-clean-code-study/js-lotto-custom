@@ -31,10 +31,11 @@ export default class WinLotto extends Lotto {
         if (LottoRule.winningInfo[rank].checkBonus && bonusCorrect) {
           return rank;
         }
-
         return rank;
       }
     }
+
+    return 'none';
   }
 
   getWinningResult(lottos) {
@@ -45,15 +46,15 @@ export default class WinLotto extends Lotto {
       prizes: {},
     };
 
-    Object.entries(LottoRule.moneyByRank).forEach(([rank, money]) => {
+    Object.entries(LottoRule.winningInfo).forEach(([rank, rankInfo]) => {
       winningResult.details[rank] = 0;
-      winningResult.prizes[rank + 'Money'] = money;
+      winningResult.prizes[rank + 'Money'] = rankInfo.prize;
     });
     lottos.forEach((lotto) => {
       const rank = this.getRank(lotto.get());
 
       winningResult.details[rank] += 1;
-      winningResult.prize += LottoRule.moneyByRank[rank];
+      winningResult.prize += LottoRule.winningInfo[rank].prize;
     });
 
     return winningResult;
