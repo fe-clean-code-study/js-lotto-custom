@@ -18,6 +18,15 @@ const createWinningNumbers = async () => {
   return winningNumbers.numbers;
 };
 
+const retryCreateWinningNumbers = async () => {
+  const winningNumbers = await retryOnFailureAsync(
+    createWinningNumbers,
+    (error) => outputManager.print(error.message)
+  );
+
+  return winningNumbers;
+};
+
 const createBonusNumber = async () => {
   const inputNumber = await inputManager.scan(
     "> 보너스 번호를 입력해 주세요. ",
@@ -33,15 +42,19 @@ const createBonusNumber = async () => {
   return bonusNumber.value;
 };
 
-const createWinningLotto = async () => {
-  const winningNumbers = await retryOnFailureAsync(
-    createWinningNumbers,
-    (error) => outputManager.print(error.message)
+const retryCreateBonusNumber = async () => {
+  const bonusNumber = await retryOnFailureAsync(createBonusNumber, (error) =>
+    outputManager.print(error.message)
   );
 
+  return bonusNumber;
+};
+
+const createWinningLotto = async () => {
   const winningLotto = await retryOnFailureAsync(
     async () => {
-      const bonusNumber = await createBonusNumber();
+      const winningNumbers = await retryCreateWinningNumbers();
+      const bonusNumber = await retryCreateBonusNumber();
 
       return new WinningLotto(winningNumbers, bonusNumber);
     },
