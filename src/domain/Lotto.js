@@ -2,39 +2,45 @@ import createValidator from '../utils/createValidator.js';
 import LottoValidator from '../validator/domain/LottoValidator.js';
 
 export default class Lotto {
-  #validator;
-  #lotto;
+  lotto;
 
   constructor(...lotto) {
-    this.#validator = createValidator(LottoValidator);
-    this.setLotto(...lotto);
+    this.set(...lotto);
   }
 
-  setLotto(...lotto) {
+  static normalize(...lotto) {
     if (Array.isArray(lotto[0])) {
       lotto = lotto.flat();
     }
     if (lotto.length === 1) {
       lotto = lotto[0].split(',').map((number) => number.trim());
     }
-    const nextLotto = [...lotto]
-      .map((number) => Number(number))
-      .sort((a, b) => a - b);
-
-    this.#validator({ lotto: nextLotto });
-    this.#lotto = [...nextLotto];
-  }
-
-  accord(compare) {
-    compare.sort((a, b) => a - b);
-
-    return compare.reduce(
-      (prev, curr, index) => (curr === this.#lotto[index] ? prev + 1 : prev),
-      0,
-    );
+    return [...lotto].map((number) => Number(number)).sort((a, b) => a - b);
   }
 
   get() {
-    return [...this.#lotto];
+    return [...this.lotto];
+  }
+
+  set(...lotto) {
+    const validator = createValidator(LottoValidator);
+    const normalizedLotto = Lotto.normalize(...lotto);
+
+    validator({ common: normalizedLotto, defaultLotto: normalizedLotto });
+    this.lotto = normalizedLotto;
+  }
+
+  accord(...compareLotto) {
+    const normalizedCompareLotto = Lotto.normalize(...compareLotto);
+    const set = new Set(
+      this.lotto.length > normalizedCompareLotto.length
+        ? this.lotto
+        : normalizedCompareLotto,
+    );
+
+    return normalizedCompareLotto.reduce(
+      (prev, curr) => (set.has(curr) ? prev + 1 : prev),
+      0,
+    );
   }
 }
