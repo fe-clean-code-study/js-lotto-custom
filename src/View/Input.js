@@ -29,7 +29,7 @@ export default class Input {
     } catch (error) {
       console.log(error);
 
-      return this.input(message, options);
+      return this.readInput(message, options);
     }
   }
 }
