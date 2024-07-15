@@ -1,5 +1,6 @@
 import { describe, test, expect } from 'vitest';
 import WinLotto from '../domain/WinLotto';
+import LottoRule from '../domain/LottoRule';
 
 describe('WinLotto 클래스에 대한 단위 테스트', () => {
   const correctLotto = [1, 2, 3, 4, 5, 6, 7];
@@ -74,6 +75,55 @@ describe('WinLotto 클래스에 대한 단위 테스트', () => {
       }).toThrowError('로또번호의 각 번호는 1~45 사이여야 합니다.');
     },
   );
+
+  test('isBonusCorrect 메서드는 보너스 번호가 로또 번호 안에 포함되면 true 를 반환한다.', () => {
+    const winLotto = makeWinLottoMocking(correctLotto);
+
+    expect(winLotto.isBonusCorrect([1, 2, 3, 4, 5, 7])).toBeTruthy();
+  });
+
+  test.each([
+    { lotto: [1, 2, 3, 4, 5, 6], result: 'first' },
+    { lotto: [1, 2, 3, 4, 5, 7], result: 'second' },
+    { lotto: [1, 2, 3, 4, 5, 8], result: 'third' },
+    { lotto: [1, 2, 3, 4, 8, 9], result: 'fourth' },
+    { lotto: [1, 2, 3, 8, 9, 10], result: 'fifth' },
+  ])(
+    'getRank 는 lotto($lotto)가 winLotto와 일치하는 개수에 따라 rank($result)를 반환한다.',
+    ({ lotto, result }) => {
+      const winLotto = makeWinLottoMocking(correctLotto);
+
+      expect(winLotto.getRank(lotto)).toBe(result);
+    },
+  );
+
+  test('getWinningResult 메서드는 lottos 배열을 받아 당첨 결과를 반환한다.', () => {
+    const winningResult = {
+      prize: 5000,
+      purchases: 1000,
+      details: {
+        first: 0,
+        second: 0,
+        third: 0,
+        fourth: 0,
+        fifth: 1,
+        none: 0,
+      },
+      prizes: {
+        firstMoney: LottoRule.winningInfo.first.prize,
+        secondMoney: LottoRule.winningInfo.second.prize,
+        thirdMoney: LottoRule.winningInfo.third.prize,
+        fourthMoney: LottoRule.winningInfo.fourth.prize,
+        fifthMoney: LottoRule.winningInfo.fifth.prize,
+        noneMoney: LottoRule.winningInfo.none.prize,
+      },
+    };
+    const winningLotto = makeWinLottoMocking(correctLotto);
+
+    expect(winningLotto.getWinningResult([[1, 2, 3, 8, 9, 10]])).toStrictEqual(
+      winningResult,
+    );
+  });
 });
 
 function makeWinLottoMocking(...lotto) {
