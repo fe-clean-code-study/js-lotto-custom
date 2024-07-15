@@ -1,9 +1,9 @@
 import { LOTTO_PRICE } from "../constants/index.js";
 import {
-  getRandomNumber,
-  isDuplicated,
+  range,
   throwErrorWithCondition,
   validate,
+  shuffle,
 } from "../utils/index.js";
 import Lotto from "./Lotto.js";
 import LottoNumber from "./LottoNumber.js";
@@ -27,7 +27,7 @@ class LottoMachine {
   }
 
   static #createLottos(count) {
-    return Array.from({ length: count }).map(() => LottoMachine.#createLotto());
+    return Array.from({ length: count }).map(LottoMachine.#createLotto);
   }
 
   static #createLotto() {
@@ -38,23 +38,12 @@ class LottoMachine {
   }
 
   static #getLottoNumbers() {
-    const lottoNumbers = [];
-    const addLottoNumber = (number) => {
-      const nextLottoNumbers = lottoNumbers.concat(number);
-      !isDuplicated(nextLottoNumbers) && lottoNumbers.push(number);
-    };
+    const lottoNumbers = range(
+      LottoNumber.MIN_NUMBER,
+      LottoNumber.MAX_NUMBER + 1
+    );
 
-    while (lottoNumbers.length < Lotto.NUMBERS_SIZE) {
-      const lottoNumber = LottoMachine.#getLottoNumber();
-
-      addLottoNumber(lottoNumber);
-    }
-
-    return lottoNumbers;
-  }
-
-  static #getLottoNumber() {
-    return getRandomNumber(LottoNumber.MIN_NUMBER, LottoNumber.MAX_NUMBER);
+    return shuffle(lottoNumbers).slice(0, Lotto.NUMBERS_SIZE);
   }
 
   static #countLotto(price) {
