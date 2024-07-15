@@ -7,7 +7,7 @@ export default class View {
     this.output = new Output({
       template: {
         printPurchaseQuantity: `%{quantity}개를 구매했습니다.`,
-        printLotto: `%{lotto}`,
+        printLotto: `[%{lotto}]`,
         printNumberOfWins: `
         당첨 통계\n
         ----------------------\n
