@@ -47,13 +47,16 @@ export default class WinLotto extends Lotto {
       details: {},
       prizes: {},
     };
+    lottos = lottos.map((lotto) =>
+      Array.isArray(lotto) ? lotto : lotto.get(),
+    );
 
     Object.entries(LottoRule.winningInfo).forEach(([rank, rankInfo]) => {
       winningResult.details[rank] = 0;
       winningResult.prizes[rank + 'Money'] = rankInfo.prize;
     });
     lottos.forEach((lotto) => {
-      const rank = this.getRank(lotto.get());
+      const rank = this.getRank(lotto);
 
       winningResult.details[rank] += 1;
       winningResult.prize += LottoRule.winningInfo[rank].prize;
