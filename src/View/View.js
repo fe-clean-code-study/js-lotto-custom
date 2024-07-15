@@ -8,14 +8,14 @@ export default class View {
       template: {
         printPurchaseQuantity: `%{quantity}개를 구매했습니다.`,
         printLotto: `%{lotto}`,
-        printResult: `
+        printNumberOfWins: `
         당첨 통계\n
         ----------------------\n
-        3개 일치 (5,000원) - %{fifth}개
-        4개 일치 (50,000원) - %{fourth}개
-        5개 일치 (1,500,000 원) - %{third}개
-        5개 일치, 보너스 볼 일치 (30,000,000원) - %{second}개
-        6개 일치 (2,000,000,000원) - %{first}개\n
+        3개 일치 (%{fifthMoney}원) - %{fifth}개
+        4개 일치 (%{fourthMoney}원) - %{fourth}개
+        5개 일치 (%{thirdMoney}원) - %{third}개
+        5개 일치, 보너스 볼 일치 (%{secondMoney}원) - %{second}개
+        6개 일치 (%{firstMoney}원) - %{first}개\n
         `,
         printRevenue: `총 수익률은 %{revenue}%입니다.`,
       },
@@ -34,6 +34,13 @@ export default class View {
     return this.input.readInput('> 보너스 번호를 입력해주세요. : ', options);
   }
 
+  async inputRestart(options) {
+    return this.input.readInput(
+      '> 로또를 다시 구매하시겠습니까? (예: y, 아니오: n) : ',
+      options,
+    );
+  }
+
   printPurchaseQuantity(quantity) {
     Output.print(this.output.format('printPurchaseQuantity', { quantity }));
   }
@@ -45,8 +52,8 @@ export default class View {
     Output.lineBreak();
   }
 
-  printResult(resultInfo) {
-    Output.print(this.output.format('printResult', resultInfo));
+  printNumberOfWins(lottoResult) {
+    Output.print(this.output.format('printNumberOfWins', lottoResult));
   }
 
   printRevenue(revenue) {
