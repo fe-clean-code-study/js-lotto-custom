@@ -15,7 +15,7 @@ const LottoValidator = {
       (LottoRule.minNumber <= value && value <= LottoRule.maxNumber) ||
       `로또 번호는 ${LottoRule.minNumber}~${LottoRule.maxNumber}사이의 숫자여야 합니다.`,
   },
-  lotto: {
+  common: {
     checkType: (value) =>
       value.every((number) => !isNaN(number)) ||
       '숫자로 변환할 수 없는 문자가 포함되어 있습니다.',
@@ -31,9 +31,16 @@ const LottoValidator = {
         ),
       ) ||
       `로또번호의 각 번호는 ${LottoRule.minNumber}~${LottoRule.maxNumber} 사이여야 합니다.`,
+  },
+  defaultLotto: {
     checkLength: (value) =>
-      value.length === LottoRule.length ||
-      `로또번호의 개수는 ${LottoRule.length}개여야 합니다.`,
+      value.length === LottoRule.defaultLength ||
+      `로또번호의 개수는 ${LottoRule.defaultLength}개여야 합니다.`,
+  },
+  winLotto: {
+    checkLength: (value) =>
+      value.length === LottoRule.winLength ||
+      `로또번호의 개수는 ${LottoRule.winLength}개여야 합니다.`,
   },
 };
 
