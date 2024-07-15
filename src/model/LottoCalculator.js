@@ -1,4 +1,4 @@
-import { LOTTO_PRICE, LOTTO_RANKING_INFO } from "../constants/index.js";
+import { LOTTO } from "../constants/index.js";
 
 class LottoCalculator {
   #winningCounts;
@@ -19,7 +19,7 @@ class LottoCalculator {
       winningLotto,
     });
 
-    const price = lottos.length * LOTTO_PRICE;
+    const price = lottos.length * LOTTO.PRICE;
 
     this.#rateOfReturn = LottoCalculator.#calcRateOfReturn(
       this.#winningCounts,
@@ -85,12 +85,12 @@ class LottoCalculator {
   }
 
   static #getPrizeMoney(ranking) {
-    return LOTTO_RANKING_INFO.find((info) => info.ranking === Number(ranking))
+    return LOTTO.RANKING_INFO.find((info) => info.ranking === Number(ranking))
       .prizeMoney;
   }
 
   static #getRanking(matchingCount, isBonusMatch) {
-    const currentInfo = LOTTO_RANKING_INFO.find(
+    const currentInfo = LOTTO.RANKING_INFO.find(
       (info) =>
         info.matchingCount === matchingCount &&
         Boolean(info.isBonusMatch) === isBonusMatch

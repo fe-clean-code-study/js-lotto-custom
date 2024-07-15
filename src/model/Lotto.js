@@ -1,3 +1,4 @@
+import { LOTTO } from "../constants/index.js";
 import {
   isDuplicated,
   throwErrorWithCondition,
@@ -6,8 +7,6 @@ import {
 import LottoNumber from "./LottoNumber.js";
 
 class Lotto {
-  static #NUMBERS_SIZE = 6;
-
   #lottoNumbers;
 
   constructor(numbers) {
@@ -20,16 +19,12 @@ class Lotto {
     return this.#lottoNumbers.map((lottoNumber) => lottoNumber.value);
   }
 
-  static get NUMBERS_SIZE() {
-    return Lotto.#NUMBERS_SIZE;
-  }
-
   static #validateNumbers(lottoNumbers) {
     validate.array(lottoNumbers, "로또 번호로 적합하지 않은 값입니다.");
 
     throwErrorWithCondition(
-      lottoNumbers.length !== Lotto.#NUMBERS_SIZE,
-      `로또 번호는 ${Lotto.#NUMBERS_SIZE}개여야 합니다.`
+      lottoNumbers.length !== LOTTO.NUMBERS_SIZE,
+      `로또 번호는 ${LOTTO.NUMBERS_SIZE}개여야 합니다.`
     );
 
     throwErrorWithCondition(

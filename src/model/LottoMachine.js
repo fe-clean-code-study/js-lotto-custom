@@ -1,4 +1,4 @@
-import { LOTTO_PRICE } from "../constants/index.js";
+import { LOTTO } from "../constants/index.js";
 import {
   range,
   throwErrorWithCondition,
@@ -6,7 +6,6 @@ import {
   shuffle,
 } from "../utils/index.js";
 import Lotto from "./Lotto.js";
-import LottoNumber from "./LottoNumber.js";
 
 class LottoMachine {
   #lottos;
@@ -38,24 +37,21 @@ class LottoMachine {
   }
 
   static #getLottoNumbers() {
-    const lottoNumbers = range(
-      LottoNumber.MIN_NUMBER,
-      LottoNumber.MAX_NUMBER + 1
-    );
+    const lottoNumbers = range(LOTTO.MIN_NUMBER, LOTTO.MAX_NUMBER + 1);
 
-    return shuffle(lottoNumbers).slice(0, Lotto.NUMBERS_SIZE);
+    return shuffle(lottoNumbers).slice(0, LOTTO.NUMBERS_SIZE);
   }
 
   static #countLotto(price) {
-    return Math.floor(price / LOTTO_PRICE);
+    return Math.floor(price / LOTTO.PRICE);
   }
 
   static #validatePrice(price) {
     validate.integer(price, "로또 구입 금액으로 정수를 입력해야 합니다.");
 
     throwErrorWithCondition(
-      price < LOTTO_PRICE,
-      `로또 구입 금액은 ${LOTTO_PRICE}원이상이어야 합니다.`
+      price < LOTTO.PRICE,
+      `로또 구입 금액은 ${LOTTO.PRICE}원이상이어야 합니다.`
     );
   }
 }
