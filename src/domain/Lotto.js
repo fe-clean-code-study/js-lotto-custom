@@ -31,16 +31,13 @@ export default class Lotto {
   }
 
   accord(...compareLotto) {
-    const normalizedCompareLotto = Lotto.normalize(...compareLotto);
+    compareLotto = Lotto.normalize(...compareLotto);
     const set = new Set(
-      this.lotto.length > normalizedCompareLotto.length
-        ? this.lotto
-        : normalizedCompareLotto,
+      this.lotto.length > compareLotto.length ? this.lotto : compareLotto,
     );
+    const base =
+      this.lotto.length > compareLotto.length ? compareLotto : this.lotto;
 
-    return normalizedCompareLotto.reduce(
-      (prev, curr) => (set.has(curr) ? prev + 1 : prev),
-      0,
-    );
+    return base.reduce((prev, curr) => (set.has(curr) ? prev + 1 : prev), 0);
   }
 }
