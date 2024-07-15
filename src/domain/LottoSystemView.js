@@ -5,9 +5,11 @@ import formatCurrency from '../utils/formatCurrency.js';
 export default class LottoSystemView {
   constructor() {
     this.printer = new ConsolePrinter({
+      start: '🍀 제 %{1}회 로또 복권 추첨 🍀',
       paidCount: '%{1}개를 구매했습니다.',
       lottoTicket: '%{1} | %{2} | %{3} | %{4} | %{5} | %{6}',
       line: '---------------------------------------------',
+      line2: '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~',
       ranking: '%{1}등 : %{2}개 일치 (%{3}원) - %{4}개',
       rankingWithBonus: '%{1}등 : %{2}개 일치, 보너스볼 일치 (%{3}원) - %{4}개',
       profitRatio: '총 수익률은 %{1}% 입니다.',
@@ -36,6 +38,13 @@ export default class LottoSystemView {
     this.printer.printWithTemplate('replay', [formatCurrency(leftPaidAmount)]);
     const answer = await this.reader.read('다시하기 = S / 그민두기 = Q : ');
     return answer.toUpperCase() === 'S';
+  }
+
+  displayLottoStart(gameCount) {
+    this.printer.lineBreak();
+    this.printer.printWithTemplate('line2');
+    this.printer.printWithTemplate('start', [gameCount]);
+    this.printer.printWithTemplate('line2');
   }
 
   displayPaidCount({ ticketCount }) {

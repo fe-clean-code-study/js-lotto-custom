@@ -26,7 +26,9 @@ export default class LottoSystemControl {
   }
 
   async run() {
+    let gameCount = 1;
     do {
+      this.viewer.displayLottoStart(gameCount++);
       await this.setUpPayAmount();
       this.viewer.displayPaidCount(this.lottoSystem);
       this.viewer.displayLottoTickets(this.lottoSystem);

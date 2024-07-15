@@ -23,6 +23,7 @@ export default class LottoRuleSet {
   increaseRankProfit(leftAmount) {
     this.#ruleSet = this.#ruleSet.map(({ profit, distribute, ...rule }) => ({
       ...rule,
+      distribute,
       profit: distribute ? profit + Math.floor(leftAmount * distribute) : profit,
     }));
   }

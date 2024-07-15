@@ -2,7 +2,7 @@ import { createWinningLotto } from './Lotto.js';
 import LottoPayment from './LottoPayment.js';
 import LOTTO_RANKING_RULE from '../constants/lottoRankingRule.js';
 import cloneDeep from '../utils/cloneDeep.js';
-import LottoRuleSet from './LottoRule.js';
+import LottoRuleSet from './LottoRuleSet.js';
 
 export default class LottoSystem {
   #ruleSet;
@@ -60,7 +60,6 @@ export default class LottoSystem {
   }
 
   get profitAmount() {
-    console.log(this.lottoRankingResult);
     return this.lottoRankingResult.reduce((sum, { count, profit }) => sum + profit * count, 0);
   }
 

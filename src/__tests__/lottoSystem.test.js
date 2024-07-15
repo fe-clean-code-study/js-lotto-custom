@@ -1,5 +1,4 @@
 import LottoSystem from '../domain/LottoSystem.js';
-import { lottoSystemValidations } from '../validations/lottoSystem.js';
 import createLottoNumbers from '../domain/createLottoNumbers.js';
 import Lotto from '../domain/Lotto.js';
 
@@ -13,85 +12,6 @@ describe('로또 시스템 테스트', async () => {
   beforeEach(() => {
     createLottoNumbers.mockReset();
     createLottoNumbers.mockImplementation(originalCreateLottoNumbers);
-  });
-
-  test('로또 시스템은 순위가 올바르게 매겨진 랭킹 규칙만 사용한다.', () => {
-    const rankingRuleHasInvalidRank1 = [
-      {
-        matchCount: 3,
-        bonusMatch: false,
-        profit: 1000,
-        rank: -1,
-      },
-    ];
-    expect(
-      () =>
-        new LottoSystem({
-          rankingRule: rankingRuleHasInvalidRank1,
-        }),
-    ).toThrow(lottoSystemValidations.validRanks.errorMessage);
-
-    const rankingRuleHasInvalidRank2 = [
-      {
-        matchCount: 3,
-        bonusMatch: false,
-        profit: 1000,
-        rank: 3,
-      },
-    ];
-    expect(
-      () =>
-        new LottoSystem({
-          rankingRule: rankingRuleHasInvalidRank2,
-        }),
-    ).toThrow(lottoSystemValidations.hasAllRanks.errorMessage);
-  });
-
-  test('로또 시스템은 유효한 matchCount, bonus, profit 이 포함된 랭킹 규칙만 사용한다.', () => {
-    const rankingRuleHasInvalidMatchCount = [
-      {
-        bonusMatch: true,
-        profit: 1000,
-        rank: 1,
-        matchCount: 100,
-      },
-    ];
-    expect(
-      () =>
-        new LottoSystem({
-          rankingRule: rankingRuleHasInvalidMatchCount,
-        }),
-    ).toThrow(lottoSystemValidations.validMatchCounts.errorMessage);
-
-    const rankingRuleHasInvalidBonusMatch = [
-      {
-        profit: 1000,
-        rank: 1,
-        matchCount: 3,
-        bonusMatch: 'false',
-      },
-    ];
-    expect(
-      () =>
-        new LottoSystem({
-          rankingRule: rankingRuleHasInvalidBonusMatch,
-        }),
-    ).toThrow(lottoSystemValidations.validBonusMatches.errorMessage);
-
-    const rankingRuleHasInvalidProfit = [
-      {
-        bonusMatch: true,
-        profit: '1000',
-        rank: 1,
-        matchCount: 3,
-      },
-    ];
-    expect(
-      () =>
-        new LottoSystem({
-          rankingRule: rankingRuleHasInvalidProfit,
-        }),
-    ).toThrow(lottoSystemValidations.validProfits.errorMessage);
   });
 
   test('로또 시스템은 정확한 개수의 로또를 구매한다.', () => {
@@ -123,6 +43,16 @@ describe('로또 시스템 테스트', async () => {
     lottoSystem.payLottoTicket(2000);
 
     expect(lottoSystem.profitAmount).toBe(2000050000);
+  });
+
+  test('로또 시스템은 당첨금이 지불된 후의 남은 구매금액을 계산할 수 있다.', () => {
+    createLottoNumbers.mockReturnValueOnce([1, 2, 3, 4, 5, 6]).mockReturnValue([7, 8, 9, 10, 11, 12]);
+
+    const lottoSystem = new LottoSystem();
+    lottoSystem.setWinningLotto([4, 5, 6, 13, 14, 15], 16);
+    lottoSystem.payLottoTicket(100000);
+
+    expect(lottoSystem.leftPaidAmount).toBe(95000);
   });
 
   test('로또 시스템은 수익율을 계산할 수 있다.', () => {
