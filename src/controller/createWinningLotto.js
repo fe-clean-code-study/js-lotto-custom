@@ -1,17 +1,15 @@
-import { inputManager, outputManager } from "../service/index.js";
+import { inputManager } from "../service/index.js";
 import { Lotto, LottoNumber, WinningLotto } from "../model/index.js";
 import { retryOnFailureAsync } from "../utils/index.js";
+import handleErrorAndPrint from "./handleErrorAndPrint.js";
 
 const createWinningLotto = async () => {
-  const winningLotto = await retryOnFailureAsync(
-    async () => {
-      const winningNumbers = await retryCreateWinningNumbers();
-      const bonusNumber = await retryCreateBonusNumber();
+  const winningLotto = await retryOnFailureAsync(async () => {
+    const winningNumbers = await retryCreateWinningNumbers();
+    const bonusNumber = await retryCreateBonusNumber();
 
-      return new WinningLotto(winningNumbers, bonusNumber);
-    },
-    (error) => outputManager.print(error.message)
-  );
+    return new WinningLotto(winningNumbers, bonusNumber);
+  }, handleErrorAndPrint);
 
   return winningLotto;
 };
@@ -21,7 +19,7 @@ export default createWinningLotto;
 const retryCreateWinningNumbers = async () => {
   const winningNumbers = await retryOnFailureAsync(
     createWinningNumbers,
-    (error) => outputManager.print(error.message)
+    handleErrorAndPrint
   );
 
   return winningNumbers;
@@ -44,8 +42,9 @@ const createWinningNumbers = async () => {
 };
 
 const retryCreateBonusNumber = async () => {
-  const bonusNumber = await retryOnFailureAsync(createBonusNumber, (error) =>
-    outputManager.print(error.message)
+  const bonusNumber = await retryOnFailureAsync(
+    createBonusNumber,
+    handleErrorAndPrint
   );
 
   return bonusNumber;
