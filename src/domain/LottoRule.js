@@ -1,5 +1,6 @@
-import generateRandomNumbers from '../utils/generateRandomNumbers.js';
+import generateRandomNumber from '../utils/generateRandomNumber.js';
 
+// 어떤 변수들은 대문자로 변경하는 게 좋지 않을까요
 const LottoRule = {
   lottoPrice: 1000,
   limitPrice: 10_000_000,
@@ -11,11 +12,13 @@ const LottoRule = {
     return Math.floor(money / LottoRule.lottoPrice);
   },
   generateLottoNumbers: () => {
-    return generateRandomNumbers(
-      LottoRule.defaultLength,
-      LottoRule.minNumber,
-      LottoRule.maxNumber,
-    );
+    const set = new Set();
+
+    while (set.size < LottoRule.defaultLength) {
+      set.add(generateRandomNumber(LottoRule.minNumber, LottoRule.maxNumber));
+    }
+
+    return [...set];
   },
 };
 
