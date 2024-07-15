@@ -20,7 +20,7 @@ export default class Output {
     this.validator({ templateKey, templateVariables });
     let templateString = this.#template[templateKey];
 
-    Object.entires(templateVariables).forEach(([variable, value]) => {
+    Object.entries(templateVariables).forEach(([variable, value]) => {
       templateString = templateString.replaceAll(`%{${variable}}`, value);
     });
 
