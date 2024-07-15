@@ -1,6 +1,5 @@
 import { describe, test, expect } from 'vitest';
 import WinLotto from '../domain/WinLotto';
-import LottoRule from '../domain/LottoRule';
 
 describe('WinLotto 클래스에 대한 단위 테스트', () => {
   const correctLotto = [1, 2, 3, 4, 5, 6, 7];
@@ -110,12 +109,12 @@ describe('WinLotto 클래스에 대한 단위 테스트', () => {
         none: 0,
       },
       prizes: {
-        firstMoney: LottoRule.winningInfo.first.prize,
-        secondMoney: LottoRule.winningInfo.second.prize,
-        thirdMoney: LottoRule.winningInfo.third.prize,
-        fourthMoney: LottoRule.winningInfo.fourth.prize,
-        fifthMoney: LottoRule.winningInfo.fifth.prize,
-        noneMoney: LottoRule.winningInfo.none.prize,
+        firstMoney: '2,000,000,000',
+        secondMoney: '30,000,000',
+        thirdMoney: '1,500,000',
+        fourthMoney: '50,000',
+        fifthMoney: '5,000',
+        noneMoney: '0',
       },
     };
     const winningLotto = makeWinLottoMocking(correctLotto);

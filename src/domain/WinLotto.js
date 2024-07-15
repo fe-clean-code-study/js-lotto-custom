@@ -2,6 +2,7 @@ import Lotto from './Lotto.js';
 import LottoValidator from '../validator/domain/LottoValidator.js';
 import createValidator from '../utils/createValidator.js';
 import LottoRule from './LottoRule.js';
+import formatCurrency from '../utils/formatCurrency.js';
 
 export default class WinLotto extends Lotto {
   constructor(...lotto) {
@@ -53,7 +54,7 @@ export default class WinLotto extends Lotto {
 
     Object.entries(LottoRule.winningInfo).forEach(([rank, rankInfo]) => {
       winningResult.details[rank] = 0;
-      winningResult.prizes[rank + 'Money'] = rankInfo.prize;
+      winningResult.prizes[rank + 'Money'] = formatCurrency(rankInfo.prize);
     });
     lottos.forEach((lotto) => {
       const rank = this.getRank(lotto);
