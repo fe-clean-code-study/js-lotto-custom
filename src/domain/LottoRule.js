@@ -33,6 +33,11 @@ const LottoRule = {
       checkBonus: false,
       accord: 3,
     },
+    none: {
+      prize: 0,
+      checkBonus: false,
+      accord: null,
+    },
   },
   exchange: (money) => {
     return Math.floor(money / LottoRule.lottoPrice);
