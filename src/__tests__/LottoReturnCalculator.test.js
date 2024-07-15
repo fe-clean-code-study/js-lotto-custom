@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
-import { LottoResult } from "../model/index.js";
+import { LottoReturnCalculator } from "../model/index.js";
 
-describe("LottoResult 클래스 테스트", () => {
+describe("LottoReturnCalculator 클래스 테스트", () => {
   test("수익률을 가져온다.", () => {
     const winningCounts = {
       1: 0,
@@ -12,7 +12,7 @@ describe("LottoResult 클래스 테스트", () => {
     };
     const price = 2000;
 
-    const { rateOfReturn } = new LottoResult(winningCounts, price);
+    const { rateOfReturn } = new LottoReturnCalculator(winningCounts, price);
 
     expect(rateOfReturn).toBe(250);
   });

@@ -1,10 +1,13 @@
 import { LOTTO } from "../constants/index.js";
 
-class LottoResult {
+class LottoReturnCalculator {
   #rateOfReturn;
 
   constructor(winningCounts, price) {
-    this.#rateOfReturn = LottoResult.#calcRateOfReturn(winningCounts, price);
+    this.#rateOfReturn = LottoReturnCalculator.#calcRateOfReturn(
+      winningCounts,
+      price
+    );
   }
 
   get rateOfReturn() {
@@ -13,7 +16,10 @@ class LottoResult {
 
   static #calcRateOfReturn(winningCounts, price) {
     const sumOfPrize = Object.entries({ ...winningCounts })
-      .map(([ranking, count]) => LottoResult.#getPrizeMoney(ranking) * count)
+      .map(
+        ([ranking, count]) =>
+          LottoReturnCalculator.#getPrizeMoney(ranking) * count
+      )
       .reduce((acc, cur) => acc + cur, 0);
 
     return (sumOfPrize / price) * 100;
@@ -25,4 +31,4 @@ class LottoResult {
   }
 }
 
-export default LottoResult;
+export default LottoReturnCalculator;
