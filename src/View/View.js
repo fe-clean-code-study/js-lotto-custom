@@ -8,7 +8,7 @@ export default class View {
       template: {
         printPurchaseQuantity: `%{quantity}개를 구매했습니다.`,
         printLotto: `[%{lotto}]`,
-        printNumberOfWins: `
+        printWinningResult: `
         당첨 통계\n
         ----------------------\n
         3개 일치 (%{fifthMoney}원) - %{fifth}개
@@ -52,8 +52,8 @@ export default class View {
     Output.lineBreak();
   }
 
-  printNumberOfWins(lottoResult) {
-    Output.print(this.output.format('printNumberOfWins', lottoResult));
+  printWinningResult(lottoResult) {
+    Output.print(this.output.format('printWinningResult', lottoResult));
   }
 
   printRevenue(revenue) {
