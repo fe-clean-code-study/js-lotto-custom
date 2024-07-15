@@ -13,6 +13,8 @@ export default class LottoController {
   async run() {
     while (true) {
       const lottos = await this.getLottos();
+
+      this.view.printPurchaseQuantity(lottos.length);
       this.view.printLottos(lottos.map((lotto) => lotto.get()));
 
       const winLotto = await this.getwinLotto();
