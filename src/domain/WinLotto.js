@@ -26,7 +26,7 @@ export default class WinLotto extends Lotto {
     const bonusCorrect = this.isBonusCorrect(lotto);
     const accordCount = this.accord(lotto) - bonusCorrect ? 1 : 0;
 
-    for (const rank of LottoRule.winningInfo) {
+    for (const rank in LottoRule.winningInfo) {
       if (accordCount === LottoRule.winningInfo[rank].accord) {
         if (LottoRule.winningInfo[rank].checkBonus && bonusCorrect) {
           return rank;
