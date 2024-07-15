@@ -1,4 +1,5 @@
 import { LOTTO } from "../constants/index.js";
+import { formatNumber } from "../utils/index.js";
 
 class LottoReturnCalculator {
   #rateOfReturn;
@@ -11,7 +12,7 @@ class LottoReturnCalculator {
   }
 
   get rateOfReturn() {
-    return this.#rateOfReturn;
+    return formatNumber(this.#rateOfReturn);
   }
 
   static #calcRateOfReturn(winningCounts, price) {

@@ -5,3 +5,4 @@ export { default as retryOnFailureAsync } from "./retryOnFailureAsync.js";
 export { default as formatKoreanCurrency } from "./formatKoreanCurrency.js";
 export * from "./arrayUtils.js";
 export { default as getUserFriendlyErrorMessage } from "./getUserFriendlyErrorMessage.js";
+export { default as formatNumber } from "./formatNumber.js";
