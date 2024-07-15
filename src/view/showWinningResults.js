@@ -1,4 +1,4 @@
-import { LOTTO_RANKING_INFO } from "../constants/index.js";
+import { LOTTO } from "../constants/index.js";
 import { outputManager } from "../service/index.js";
 import { formatKoreanCurrency } from "../utils/index.js";
 
@@ -6,7 +6,7 @@ const showWinningResults = (winningCounts, rateOfReturn) => {
   outputManager.print("당첨 통계");
   outputManager.print("--------------------");
 
-  LOTTO_RANKING_INFO.reverse().forEach(
+  LOTTO.RANKING_INFO.reverse().forEach(
     ({ ranking, matchingCount, isBonusMatch, prizeMoney }) => {
       const bonusMatchMessage = isBonusMatch ? `, 보너스 볼 일치` : "";
       const formattedPrizeMoney = formatKoreanCurrency(prizeMoney);
