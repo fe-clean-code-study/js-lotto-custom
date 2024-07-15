@@ -26,13 +26,17 @@ export default class LottoSystemControl {
   }
 
   async run() {
-    await this.setUpPayAmount();
-    this.viewer.displayPaidCount(this.lottoSystem);
-    this.viewer.displayLottoTickets(this.lottoSystem);
+    do {
+      await this.setUpPayAmount();
+      this.viewer.displayPaidCount(this.lottoSystem);
+      this.viewer.displayLottoTickets(this.lottoSystem);
 
-    await this.setUpWinningLotto();
-    this.viewer.displayLottoResult(this.lottoSystem);
-    this.viewer.displayProfitRatio(this.lottoSystem);
+      await this.setUpWinningLotto();
+      this.viewer.displayLottoResult(this.lottoSystem);
+      this.viewer.displayProfitRatio(this.lottoSystem);
+
+      this.lottoSystem.increaseProfit();
+    } while (await this.viewer.readKeepGoing(this.lottoSystem));
 
     this.viewer.finish();
   }

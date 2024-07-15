@@ -12,6 +12,7 @@ export default class LottoSystemView {
       rankingWithBonus: '%{1}등 : %{2}개 일치, 보너스볼 일치 (%{3}원) - %{4}개',
       profitRatio: '총 수익률은 %{1}% 입니다.',
       error: '⚠️ %{1}',
+      replay: '게임을 계속하시겠습니까? 남은 수익 %{1}원은 다음 당첨금으로 이관됩니다.',
     });
     this.reader = new ConsoleReader();
   }
@@ -29,6 +30,12 @@ export default class LottoSystemView {
   async readBonusNumber() {
     const answer = await this.reader.read('> 보너스 번호를 입력해 주세요. : ');
     return Number(answer);
+  }
+
+  async readKeepGoing({ leftPaidAmount }) {
+    this.printer.printWithTemplate('replay', [formatCurrency(leftPaidAmount)]);
+    const answer = await this.reader.read('다시하기 = S / 그민두기 = Q : ');
+    return answer.toUpperCase() === 'S';
   }
 
   displayPaidCount({ ticketCount }) {
@@ -49,8 +56,8 @@ export default class LottoSystemView {
     this.printer.print('당첨 통계');
     this.printer.printWithTemplate('line');
 
-    lottoRankingResult.forEach(({ rank, matchCount, bonusMatch, profit, ticketList }) => {
-      const resultForPrint = [rank, matchCount, formatCurrency(profit), ticketList.length];
+    lottoRankingResult.forEach(({ rank, matchCount, bonusMatch, profit, count }) => {
+      const resultForPrint = [rank, matchCount, formatCurrency(profit), count];
       if (bonusMatch) {
         this.printer.printWithTemplate('rankingWithBonus', resultForPrint);
       } else {

@@ -18,7 +18,7 @@ export default class Lotto {
   }
 
   matchNumbers(otherLotto) {
-    Lotto.#validateLotto(otherLotto);
+    Lotto.validateLotto(otherLotto);
     return this.numbers.filter((number) => otherLotto.numbers.includes(number));
   }
 
@@ -49,7 +49,7 @@ export default class Lotto {
     });
   }
 
-  static #validateLotto(lotto) {
+  static validateLotto(lotto) {
     validateLotto({
       target: lotto,
       validationKeys: ['lottoInstance'],
