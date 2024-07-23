@@ -7,25 +7,10 @@ class InputManager {
     this.#inputFn = inputFn;
   }
 
-  async scan(query) {
+  async scan(query, processFn) {
     const inputValue = await this.#inputFn(query);
 
-    return inputValue.trim();
-  }
-
-  async retryScan(query, processFn = null) {
-    try {
-      const inputValue = await this.scan(query);
-
-      return typeof processFn === "function"
-        ? processFn(inputValue)
-        : inputValue;
-    } catch (error) {
-      return await this.retryScan(
-        `${error.message} 다시 입력해주세요.\n`,
-        processFn
-      );
-    }
+    return typeof processFn === "function" ? processFn(inputValue) : inputValue;
   }
 }
 

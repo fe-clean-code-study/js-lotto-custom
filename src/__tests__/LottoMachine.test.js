@@ -4,13 +4,13 @@ import { LottoMachine } from "../model/index.js";
 describe("LottoMachine 클래스 테스트", () => {
   test("로또를 구입할 때 정수가 아닌 값을 받으면 오류가 발생한다.", () => {
     expect(() => new LottoMachine("1")).toThrowError(
-      "로또 구입 금액으로 정수를 입력해야 합니다."
+      "[ERR_004] LottoMachine 클래스의 생성자 인수는 정수여야 합니다."
     );
   });
 
   test("로또를 구입할 때 1000원미만의 값을 받으면 오류가 발생한다.", () => {
     expect(() => new LottoMachine(999)).toThrowError(
-      "로또 구입 금액은 1000원이상이어야 합니다."
+      "[ERR_004] LottoMachine 클래스의 생성자 인수는 1000이상이어야 합니다."
     );
   });
 

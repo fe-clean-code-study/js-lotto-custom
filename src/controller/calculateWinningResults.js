@@ -1,11 +1,12 @@
-import { LottoCalculator } from "../model/index.js";
+import { LOTTO } from "../constants/index.js";
+import { LottoMatcher, LottoReturnCalculator } from "../model/index.js";
 
-const calculateWinningResults = ({ price, lottos, winningLotto }) => {
-  const { winningCounts, rateOfReturn } = new LottoCalculator({
-    price,
-    lottos,
-    winningLotto,
-  });
+const calculateWinningResults = ({ lottos, winningLotto }) => {
+  const { winningCounts } = new LottoMatcher(lottos, winningLotto);
+
+  const price = lottos.length * LOTTO.PRICE;
+
+  const { rateOfReturn } = new LottoReturnCalculator(winningCounts, price);
 
   return { winningCounts, rateOfReturn };
 };

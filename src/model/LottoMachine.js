@@ -1,25 +1,20 @@
+import { LOTTO } from "../constants/index.js";
 import {
-  getRandomNumber,
-  isDuplicated,
+  range,
   throwErrorWithCondition,
   validate,
+  shuffle,
 } from "../utils/index.js";
 import Lotto from "./Lotto.js";
 
 class LottoMachine {
-  static #PRICE_PER_ONE = 1000;
-  #price;
   #lottos;
 
   constructor(price) {
     LottoMachine.#validatePrice(price);
-    this.#price = price;
-    const count = LottoMachine.#countLotto(this.#price);
-    this.#lottos = LottoMachine.#createLottos(count);
-  }
 
-  get price() {
-    return this.#price;
+    const count = LottoMachine.#countLotto(price);
+    this.#lottos = LottoMachine.#createLottos(count);
   }
 
   get count() {
@@ -30,8 +25,24 @@ class LottoMachine {
     return [...this.#lottos];
   }
 
+  static #validatePrice(price) {
+    validate.integer(
+      price,
+      "[ERR_004] LottoMachine 클래스의 생성자 인수는 정수여야 합니다."
+    );
+
+    throwErrorWithCondition(
+      price < LOTTO.PRICE,
+      `[ERR_004] LottoMachine 클래스의 생성자 인수는 ${LOTTO.PRICE}이상이어야 합니다.`
+    );
+  }
+
+  static #countLotto(price) {
+    return Math.floor(price / LOTTO.PRICE);
+  }
+
   static #createLottos(count) {
-    return Array.from({ length: count }).map(() => LottoMachine.#createLotto());
+    return Array.from({ length: count }).map(LottoMachine.#createLotto);
   }
 
   static #createLotto() {
@@ -42,36 +53,9 @@ class LottoMachine {
   }
 
   static #getLottoNumbers() {
-    const lottoNumbers = [];
-    const addLottoNumber = (number) => {
-      const nextLottoNumbers = lottoNumbers.concat(number);
-      !isDuplicated(nextLottoNumbers) && lottoNumbers.push(number);
-    };
+    const lottoNumbers = range(LOTTO.MIN_NUMBER, LOTTO.MAX_NUMBER + 1);
 
-    while (lottoNumbers.length < Lotto.NUMBERS_SIZE) {
-      const lottoNumber = LottoMachine.#getLottoNumber();
-
-      addLottoNumber(lottoNumber);
-    }
-
-    return lottoNumbers;
-  }
-
-  static #getLottoNumber() {
-    return getRandomNumber(Lotto.MIN_NUMBER, Lotto.MAX_NUMBER);
-  }
-
-  static #countLotto(price) {
-    return Math.floor(price / LottoMachine.#PRICE_PER_ONE);
-  }
-
-  static #validatePrice(price) {
-    validate.integer(price, "로또 구입 금액으로 정수를 입력해야 합니다.");
-
-    throwErrorWithCondition(
-      price < LottoMachine.#PRICE_PER_ONE,
-      `로또 구입 금액은 ${LottoMachine.#PRICE_PER_ONE}원이상이어야 합니다.`
-    );
+    return shuffle(lottoNumbers).slice(0, LOTTO.NUMBERS_SIZE);
   }
 }
 
